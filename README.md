@@ -1,5 +1,6 @@
 2nd Year Bachelor of Science in Computer Science Thesis Project in Information Management <br>
 <b> Mix-it til you make it: Customary Drink-Mix Maker Software </b><br>
+<br>
   Our project software will be an interactive system that should provide customers 
 with a selection of ingredients and drink options that are selected by them based on 
 their preferences, changing the bar experience.<br>
