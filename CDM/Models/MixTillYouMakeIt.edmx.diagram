@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fb2fbb1d1c3c46f6af9e1ea777d3f7af" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="MixTillYouMakeItModel.AdminRecord" Width="1.5" PointX="4.5" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MixTillYouMakeItModel.CustomerTB" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MixTillYouMakeItModel.OrderTB" Width="1.5" PointX="0.875" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MixTillYouMakeItModel.ProductTB" Width="1.5" PointX="7" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MixTillYouMakeItModel.TransactionTB" Width="1.5" PointX="0.875" PointY="6.375" IsExpanded="true" />
+        <AssociationConnector Association="MixTillYouMakeItModel.FK_AdminRecord_CurstomerTB" ManuallyRouted="false" />
+        <AssociationConnector Association="MixTillYouMakeItModel.FK_AdminRecord_OrderTB" ManuallyRouted="false" />
+        <AssociationConnector Association="MixTillYouMakeItModel.FK_AdminRecord_TransactionTB" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,60 @@
+﻿@using CDM.Helper
+@model IEnumerable<CDM.Models.OrderTB>
+
+@{
+    ViewBag.Title = "Order";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Order</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderDesc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderQueueNum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDesc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @TimeSpanHelper.FormatTimeSpan(item.CreatedTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderQueueNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCost)
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("CEdit", "Admin", new { Order_TB = item.Order_ID})'">Edit</button>
+                <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("CDetail", "Admin", new { Order_TB = item.Order_ID})'">Detail</button>
+                <button type="button" class="btn btn-danger" onclick="window.location='@Url.Action("CDelete", "Admin", new { Order_TB = item.Order_ID})'">Delete</button>
+            </td>
+        </tr>
+    }
+
+</table>

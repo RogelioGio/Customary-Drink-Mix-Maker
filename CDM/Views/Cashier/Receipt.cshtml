@@ -1,0 +1,67 @@
+﻿@model CDM.Models.TransactionTB
+
+@{
+    ViewBag.Title = "Receipt";
+    var sentence = Request.Form["words"];
+    var words = sentence.Split(',');
+}
+
+<style>
+    .center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: solid, 1px;
+        border-radius: 15px;
+        padding: 100px;
+        width: 60%;
+        height: 70%;
+    }
+</style>
+
+<div class="center">
+    <h2>Receipt</h2>
+
+    <div>
+        <hr />
+        <ul>
+            @foreach (var word in words)
+            {
+                <li>@word</li>
+            }
+        </ul>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Total_Transaction)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Total_Transaction)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Payement_Amount)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Payement_Amount)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Change)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Change)
+            </dd>
+        </dl>
+        <button type="button" onclick="window.location='@Url.Action("Index","Cashier")'" id="button" class="btn btn-primary">Return to Home</button>
+    </div>
+</div>
+<script>
+    setTimeout(function () {
+        document.getElementById("button").click();
+    }, 10000);
+</script>

@@ -1,0 +1,206 @@
+﻿@model IEnumerable<CDM.Models.OrderTB>
+@using CDM.Helper;
+
+@{
+    ViewBag.Title = "Search";
+    var TotalCost = Model.Sum(o => o.TotalCost);
+    IEnumerable<string> OrderDesc = Model.Select(s => s.OrderDesc);
+    string formattedTimeSpan = TimeSpanHelper.FormatTimeSpan(Model.Select(c => c.CreatedTime).FirstOrDefault());
+    string formattedDateTime = TimeSpanHelper.FormatDateTime(Model.Select(c => c.CreatedDate).FirstOrDefault());
+}
+<style>
+    .center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: solid, 1px;
+        border-radius: 15px;
+        padding: 100px;
+        width: 60%;
+        height: 70%;
+    }
+    .center_middle {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    div.col{
+        height: 40vh;
+        width: 50vw;
+    }
+
+    button.numpad {
+        font-size: 20px;
+        width: 70px;
+        height: 70px;
+    }
+    div.numpad-container {
+        width: auto;
+        height: auto;
+        margin: 50px 10px;
+    }
+    input.payment {
+        padding: 14px;
+        font-size: 20px;
+        margin: 30px 0px;
+    }
+    button.proceed {
+        padding: 10px;
+        font-size: 20px;
+    }
+
+</style>
+
+<div class="center">
+    <div class="container">
+        <form method="post" action="@Url.Action("Receipt" , "Cashier")">
+            <div class="row center_middle">
+                <div class="col-8">
+                    <h4>Payment</h4>
+                    <table class="table">
+                        <tr>
+                            <th>
+                                Order Description
+                            </th>
+                            <th>
+                                Total Order Cost
+                            </th>
+                            <th>
+                                Date
+                            </th>
+                            <th>
+                                Time
+                            </th>
+                            <th>
+                                Queue Number
+                            </th>
+
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            string sentence = item.OrderDesc;
+                            char[] splitter = { ',' };
+                            string[] orderlist = sentence.Split(splitter);
+                            <tr>
+                                <td>
+                                    @foreach (var word in orderlist)
+                                    {
+                                        @word<br />
+                                    }
+                                </td>
+                                <td>
+                                    ₱@Html.DisplayFor(modelItem => item.TotalCost)
+                                </td>
+                                <td>
+                                    @formattedDateTime;
+                                </td>
+                                <td>
+                                    @formattedTimeSpan;
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderQueueNum)
+                                    <input type="hidden" name="orderQueueNum" value="@Html.DisplayFor(modelItem => item.OrderQueueNum)" />
+                                </td>
+                            </tr>
+
+                        }
+
+                    </table>
+
+                    @foreach (var sentence in OrderDesc)
+                    {
+
+                        var words = sentence.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+
+                        foreach (var word in words)
+                        {
+                            <input type="hidden" name="words" value="@word" />
+                        }
+                    }
+                    <label id="total">Total: ₱@TotalCost</label>
+                </div>
+
+
+                <div class="col">
+
+                    <label>
+                        Payment: <br />
+                        <input type="text" name="payment" id="numpad-input" class="payment" readonly/>
+
+                    </label><br />
+                    <button type="button" name="Id" onclick="window.location='@Url.Action("Index" , "Cashier")'" class="btn btn-primary proceed"> Back</button>
+                    <button type="submit" class="btn btn-primary proceed">Proceed</button><br />
+                    <div class="numpad-container">
+                        <div class="container">
+                            <div class="row">
+                                <button type="button" class="btn btn-primary btn-lg numpad" onclick="addToTextBox('1')">1</button>
+                                <button type="button" class="btn btn-primary btn-lg numpad" onclick="addToTextBox('2')">2</button>
+                                <button type="button" class="btn btn-primary btn-lg numpad" onclick="addToTextBox('3')">3</button>
+                            </div>
+                            <div class="row">
+                                <button type="button" class="btn btn-primary btn-lg numpad" onclick="addToTextBox('4')">4</button>
+                                <button type="button" class="btn btn-primary btn-lg numpad" onclick="addToTextBox('5')">5</button>
+                                <button type="button" class="btn btn-primary btn-lg numpad" onclick="addToTextBox('6')">6</button>
+                            </div>
+                            <div class="row">
+                                <button type="button" class="btn btn-primary btn-lg numpad" onclick="addToTextBox('7')">7</button>
+                                <button type="button" class="btn btn-primary btn-lg numpad" onclick="addToTextBox('8')">8</button>
+                                <button type="button" class="btn btn-primary btn-lg numpad" onclick="addToTextBox('9')">9</button>
+                            </div>
+                            <div class="row">
+                                <button type="button" class="btn btn-primary btn-lg numpad" onclick="clearTextBox()">Clr</button>
+                                <button type="button" class="btn btn-primary btn-lg numpad" onclick="addToTextBox('0')">0</button>
+                                <button type="button" class="btn btn-primary btn-lg numpad" onclick="deleteLast()">Del</button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+       </form> 
+       </div>
+        
+    </div>
+<script>
+    function addToTextBox(value) {
+        var textBox = document.getElementById('numpad-input');
+        textBox.value += value;
+    }
+
+    function clearTextBox() {
+        var textBox = document.getElementById('numpad-input');
+        textBox.value = '';
+    }
+
+    function deleteLast() {
+        var textBox = document.getElementById('numpad-input');
+        textBox.value = textBox.value.slice(0, -1);
+    }
+</script>
+<style>
+    .numpad-container {
+        display: inline-block;
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .numpad {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+        margin: 5px;
+        cursor: pointer;
+    }
+
+    .numpad-container .control-buttons {
+        width: calc(60px * 3 + 10px * 2);
+        display: flex;
+        justify-content: space-between;
+    }
+</style>

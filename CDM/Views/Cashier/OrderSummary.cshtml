@@ -1,0 +1,19 @@
+﻿@model CDM.Models.OrderSummary
+
+@{
+    ViewBag.Title = "Order Summary";
+}
+
+<h2>Order Summary</h2>
+
+<ul>
+    @foreach (var drink in Model.SelectedDrinks)
+    {
+        <li>@drink - ₱@Model</li>
+    }
+</ul>
+
+<p>Total Cost: ₱@Model.TotalCost</p>
+
+<button type="button" onclick="window.location='@Url.Action("OrderDrink", "Home")'">Return</button>
+<button type="button" onclick="window.location='@Url.Action("Receipt", "Home")'">Confirm order</button>

@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MixTillYouMakeItModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AdminRecord">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Transaction_ID" Type="int" />
+    <Property Name="Order_ID" Type="int" />
+    <Property Name="Customer_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="CustomerTB">
+    <Key>
+      <PropertyRef Name="Customer_ID" />
+    </Key>
+    <Property Name="Customer_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerNum" Type="nvarchar" MaxLength="7" />
+    <Property Name="Created_Date" Type="date" />
+  </EntityType>
+  <EntityType Name="OrderTB">
+    <Key>
+      <PropertyRef Name="Order_ID" />
+    </Key>
+    <Property Name="Order_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderDesc" Type="nvarchar" MaxLength="100" />
+    <Property Name="CreatedDate" Type="date" />
+    <Property Name="CreatedTime" Type="time" Precision="7" />
+    <Property Name="OrderQueueNum" Type="int" />
+  </EntityType>
+  <EntityType Name="ProductTB">
+    <Key>
+      <PropertyRef Name="Product_ID" />
+    </Key>
+    <Property Name="Product_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Product_Category" Type="nvarchar" MaxLength="50" />
+    <Property Name="Product_Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Product_Price" Type="int" />
+  </EntityType>
+  <EntityType Name="TransactionTB">
+    <Key>
+      <PropertyRef Name="TransactionID" />
+    </Key>
+    <Property Name="TransactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Total_Transaction" Type="int" />
+    <Property Name="Payement_Amount" Type="int" />
+    <Property Name="Change" Type="int" />
+  </EntityType>
+  <Association Name="FK_AdminRecord_CurstomerTB">
+    <End Role="CustomerTB" Type="Self.CustomerTB" Multiplicity="0..1" />
+    <End Role="AdminRecord" Type="Self.AdminRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerTB">
+        <PropertyRef Name="Customer_ID" />
+      </Principal>
+      <Dependent Role="AdminRecord">
+        <PropertyRef Name="Customer_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdminRecord_OrderTB">
+    <End Role="OrderTB" Type="Self.OrderTB" Multiplicity="0..1" />
+    <End Role="AdminRecord" Type="Self.AdminRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderTB">
+        <PropertyRef Name="Order_ID" />
+      </Principal>
+      <Dependent Role="AdminRecord">
+        <PropertyRef Name="Order_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdminRecord_TransactionTB">
+    <End Role="TransactionTB" Type="Self.TransactionTB" Multiplicity="0..1" />
+    <End Role="AdminRecord" Type="Self.AdminRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TransactionTB">
+        <PropertyRef Name="TransactionID" />
+      </Principal>
+      <Dependent Role="AdminRecord">
+        <PropertyRef Name="Transaction_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MixTillYouMakeItModelStoreContainer">
+    <EntitySet Name="AdminRecord" EntityType="Self.AdminRecord" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CustomerTB" EntityType="Self.CustomerTB" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderTB" EntityType="Self.OrderTB" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductTB" EntityType="Self.ProductTB" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TransactionTB" EntityType="Self.TransactionTB" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_AdminRecord_CurstomerTB" Association="Self.FK_AdminRecord_CurstomerTB">
+      <End Role="CustomerTB" EntitySet="CustomerTB" />
+      <End Role="AdminRecord" EntitySet="AdminRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdminRecord_OrderTB" Association="Self.FK_AdminRecord_OrderTB">
+      <End Role="OrderTB" EntitySet="OrderTB" />
+      <End Role="AdminRecord" EntitySet="AdminRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdminRecord_TransactionTB" Association="Self.FK_AdminRecord_TransactionTB">
+      <End Role="TransactionTB" EntitySet="TransactionTB" />
+      <End Role="AdminRecord" EntitySet="AdminRecord" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        .full-screen {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content {
+            flex: 1;
+            overflow: auto;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container-fluid" style="height: 100%">
+        <div class="row" style="height: 100%">
+            <nav class="col-md-2 d-none d-md-block sidebar navbar-dark" style="background-color: black">
+                <div class="sidebar-sticky">
+                    <div class="container top-50 start-50 translate-middlee">
+                        <a class="navbar-brand" href="#">
+                            <img src="~/Preview3.jpeg" alt="" width="250" height="250">
+                        </a>
+                    </div>
+                    <ul class="nav flex-column nav-pills mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Admin">Admin Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Admin/Customer">Customer Record</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Admin/Order">Order Record</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Admin/Transaction">Transaction Record</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Admin/Product">Product Record</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Admin/TotalSales">Total Sales</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

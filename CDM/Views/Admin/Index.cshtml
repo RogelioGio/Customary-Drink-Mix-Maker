@@ -1,0 +1,103 @@
+﻿@model CDM.Models.AdminRecordViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>
+    .center {
+        margin: 0;
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: solid, 1px;
+        border-radius: 15px;
+        padding:50px;
+    }
+</style>
+
+<div class="center">
+<h1>Administration Record</h1>
+
+<h3>User Data</h3>
+<table class="table">
+    <tr>
+        <th>
+            Customer ID
+        </th>
+        <th>
+            Order ID
+        </th>
+        <th>
+            Transaction ID
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model.AdminRecords)
+    {
+        <tr> 
+            @if (item.CustomerTB != null)
+            {
+                <td>@Html.DisplayFor(modelItem => item.CustomerTB.Customer_ID)</td>
+            }
+            else
+            {
+                <td>No data</td>
+            }
+            @if (item.OrderTB != null)
+            {
+                <td>@Html.DisplayFor(modelItem => item.OrderTB.Order_ID)</td>
+            }
+            else
+            {
+                <td>No data</td>
+            }
+            @if (item.TransactionTB != null)
+            {
+                <td>@Html.DisplayFor(modelItem => item.TransactionTB.TransactionID)</td>
+            }
+            else
+            {
+                <td>No data</td>
+            }
+        <td>
+            <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("Edit", new {id = item.ID})'">Edit</button>
+            <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("Detail", new {id = item.ID})'">Detail</button>
+            <button type="button" class="btn btn-danger" onclick="window.location='@Url.Action("Delete", new {id = item.ID})'">Delete</button>
+        </td>
+        </tr>
+    }
+</table>
+
+<h3>Existing Drink</h3>
+<table class="table">
+    <tr>
+        <th>
+            Order Queue Number
+        </th>
+        <th>
+            Order Desciption
+        </th>
+        <th>
+            Total Cost
+        </th>
+    </tr>
+    @foreach (var item in Model.OrderTB)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderQueueNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDesc)
+            </td>
+            <td>
+                
+            </td>
+        </tr>
+    }
+</table>
+</div>

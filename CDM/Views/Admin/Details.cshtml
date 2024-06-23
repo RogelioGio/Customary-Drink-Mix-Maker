@@ -1,0 +1,44 @@
+﻿@model CDM.Models.OrderTransactionCustomerViewModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@{
+    string sentence = Model.OrderDesc;
+    char[] splitter = {','};
+    string[] orderlist = sentence.Split(splitter);
+}
+
+<h1>Customer Entry</h1>
+<ul>
+    <li>ID: @Model.Customer_ID</li>
+    <li>Customer Number: @Model.CustomerNum</li>
+    <li>Created Date: @Model.Created_Date</li>
+</ul>
+
+<h1>Order Entry</h1>
+<ul>
+    <li>ID: @Model.Order_ID</li>
+    <li>
+        Order Description:
+        <ul>
+            @foreach (var word in orderlist)
+            {
+                <li>@word</li>
+            }
+        </ul>
+    </li>
+    <li>Created Date: @Model.CreatedDate</li>
+    <li>Created Time: @Model.CreatedTime</li>
+    <li>Total Cost: ₱@Model.TotalCost</li>
+</ul>
+
+<h1>Transaction Entry</h1>
+<ul>
+    <li>ID: @Model.TransactionID</li>
+    <li>Total Transaction: ₱@Model.Total_Transaction</li>
+    <li>Paid Amount: ₱@Model.Payement_Amount</li>
+    <li>Change: ₱@Model.Change</li>
+</ul>
+

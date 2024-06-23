@@ -1,0 +1,35 @@
+﻿@model CDM.Models.CustomerTB
+
+@{
+    ViewBag.Title = "CDetail";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>CDetail</h2>
+
+<div>
+    <h4>CustomerTB</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerNum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Created_Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Created_Date)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Customer_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

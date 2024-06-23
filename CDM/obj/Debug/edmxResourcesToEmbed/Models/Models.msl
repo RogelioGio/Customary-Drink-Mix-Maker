@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MixTillYouMakeItModelStoreContainer" CdmEntityContainer="MixTillYouMakeItEntities">
+    <EntitySetMapping Name="CustomerTBs">
+      <EntityTypeMapping TypeName="MixTillYouMakeItModel.CustomerTB">
+        <MappingFragment StoreEntitySet="CustomerTB">
+          <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
+          <ScalarProperty Name="CustomerNum" ColumnName="CustomerNum" />
+          <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderTBs">
+      <EntityTypeMapping TypeName="MixTillYouMakeItModel.OrderTB">
+        <MappingFragment StoreEntitySet="OrderTB">
+          <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
+          <ScalarProperty Name="OrderQueueNum" ColumnName="OrderQueueNum" />
+          <ScalarProperty Name="Order_ID" ColumnName="Order_ID" />
+          <ScalarProperty Name="OrderDesc" ColumnName="OrderDesc" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TransactionTBs">
+      <EntityTypeMapping TypeName="MixTillYouMakeItModel.TransactionTB">
+        <MappingFragment StoreEntitySet="TransactionTB">
+          <ScalarProperty Name="Change" ColumnName="Change" />
+          <ScalarProperty Name="Payement_Amount" ColumnName="Payement_Amount" />
+          <ScalarProperty Name="Total_Transaction" ColumnName="Total_Transaction" />
+          <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AdminRecords">
+      <EntityTypeMapping TypeName="MixTillYouMakeItModel.AdminRecord">
+        <MappingFragment StoreEntitySet="AdminRecord">
+          <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
+          <ScalarProperty Name="Order_ID" ColumnName="Order_ID" />
+          <ScalarProperty Name="Transaction_ID" ColumnName="Transaction_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductTBs">
+      <EntityTypeMapping TypeName="MixTillYouMakeItModel.ProductTB">
+        <MappingFragment StoreEntitySet="ProductTB">
+          <ScalarProperty Name="Product_Code" ColumnName="Product_Code" />
+          <ScalarProperty Name="Product_Price" ColumnName="Product_Price" />
+          <ScalarProperty Name="Product_Name" ColumnName="Product_Name" />
+          <ScalarProperty Name="Product_Category" ColumnName="Product_Category" />
+          <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

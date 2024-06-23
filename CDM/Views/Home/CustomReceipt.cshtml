@@ -1,0 +1,51 @@
+﻿@model List<CDM.Models.CustomDrink>
+@{
+    ViewBag.Title = "Custom Receipt";
+
+}
+<style>
+    .center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: solid, 1px;
+        border-radius: 15px;
+        padding: 100px;
+    }
+</style>
+
+<div class="center">
+    <h2>Custom Receipt</h2>
+    <h4>Order Queue Number: @Model.FirstOrDefault().queue</h4>
+    <div>
+        <p>Drinks:</p>
+        <ul>
+            @foreach (var drink in Model)
+            {
+                <li>
+                    Base Drink: @drink.BaseDrink, Size: @drink.Size, Total Cost: @drink.TotalCost
+                    <ul>
+                        @foreach (var layer in drink.Layers)
+                        {
+                            <li>@layer.Shot - @layer.Percentage%</li>
+                        }
+                    </ul>
+                </li>
+             }
+        </ul>
+        <p>Total Cost: @Model.Sum(d => d.TotalCost)</p>
+    </div>
+
+    @using (Html.BeginForm("ClearDrinks", "Home", FormMethod.Post))
+    {
+        <button type="submit" id="button">Return to Home</button>
+    }
+</div>
+
+<script>
+    setTimeout(function () {
+        document.getElementById("button").click();
+    }, 10000);
+</script>

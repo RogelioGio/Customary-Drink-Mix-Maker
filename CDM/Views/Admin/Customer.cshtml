@@ -1,0 +1,56 @@
+﻿@model IEnumerable<CDM.Models.CustomerTB>
+@using CDM.Helper;
+
+
+@{
+    ViewBag.Title = "Customer";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    string formattedDateTime = TimeSpanHelper.FormatDateTime(Model.Select(c => c.Created_Date).FirstOrDefault());
+}
+
+<style>
+    .center {
+        margin: 0;
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: solid, 1px;
+        border-radius: 15px;
+        padding: 50px;
+    }
+</style>
+
+<div class="center">
+    <h2>Customer Data Records</h2>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Created_Date)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerNum)
+                </td>
+                <td>
+                    @TimeSpanHelper.FormatDateTime(item.Created_Date)
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("CEdit", "Admin", new { Customer_ID = item.Customer_ID})'">Edit</button>
+                    <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("CDetail", "Admin", new { Customer_ID = item.Customer_ID})'">Detail</button>
+                    <button type="button" class="btn btn-danger" onclick="window.location='@Url.Action("CDelete", "Admin", new { Customer_ID = item.Customer_ID})'">Delete</button>
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

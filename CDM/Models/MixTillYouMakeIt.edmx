@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MixTillYouMakeItModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdminRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Transaction_ID" Type="int" />
+          <Property Name="Order_ID" Type="int" />
+          <Property Name="Customer_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="CustomerTB">
+          <Key>
+            <PropertyRef Name="Customer_ID" />
+          </Key>
+          <Property Name="Customer_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerNum" Type="nvarchar" MaxLength="7" />
+          <Property Name="Created_Date" Type="date" />
+        </EntityType>
+        <EntityType Name="OrderTB">
+          <Key>
+            <PropertyRef Name="Order_ID" />
+          </Key>
+          <Property Name="Order_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderDesc" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="CreatedTime" Type="time" Precision="7" />
+          <Property Name="OrderQueueNum" Type="int" />
+        </EntityType>
+        <EntityType Name="ProductTB">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+          </Key>
+          <Property Name="Product_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Product_Category" Type="nvarchar" MaxLength="50" />
+          <Property Name="Product_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Product_Price" Type="int" />
+        </EntityType>
+        <EntityType Name="TransactionTB">
+          <Key>
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="TransactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Total_Transaction" Type="int" />
+          <Property Name="Payement_Amount" Type="int" />
+          <Property Name="Change" Type="int" />
+        </EntityType>
+        <Association Name="FK_AdminRecord_CurstomerTB">
+          <End Role="CustomerTB" Type="Self.CustomerTB" Multiplicity="0..1" />
+          <End Role="AdminRecord" Type="Self.AdminRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerTB">
+              <PropertyRef Name="Customer_ID" />
+            </Principal>
+            <Dependent Role="AdminRecord">
+              <PropertyRef Name="Customer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AdminRecord_OrderTB">
+          <End Role="OrderTB" Type="Self.OrderTB" Multiplicity="0..1" />
+          <End Role="AdminRecord" Type="Self.AdminRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderTB">
+              <PropertyRef Name="Order_ID" />
+            </Principal>
+            <Dependent Role="AdminRecord">
+              <PropertyRef Name="Order_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AdminRecord_TransactionTB">
+          <End Role="TransactionTB" Type="Self.TransactionTB" Multiplicity="0..1" />
+          <End Role="AdminRecord" Type="Self.AdminRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionTB">
+              <PropertyRef Name="TransactionID" />
+            </Principal>
+            <Dependent Role="AdminRecord">
+              <PropertyRef Name="Transaction_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MixTillYouMakeItModelStoreContainer">
+          <EntitySet Name="AdminRecord" EntityType="Self.AdminRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerTB" EntityType="Self.CustomerTB" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderTB" EntityType="Self.OrderTB" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductTB" EntityType="Self.ProductTB" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransactionTB" EntityType="Self.TransactionTB" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AdminRecord_CurstomerTB" Association="Self.FK_AdminRecord_CurstomerTB">
+            <End Role="CustomerTB" EntitySet="CustomerTB" />
+            <End Role="AdminRecord" EntitySet="AdminRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AdminRecord_OrderTB" Association="Self.FK_AdminRecord_OrderTB">
+            <End Role="OrderTB" EntitySet="OrderTB" />
+            <End Role="AdminRecord" EntitySet="AdminRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AdminRecord_TransactionTB" Association="Self.FK_AdminRecord_TransactionTB">
+            <End Role="TransactionTB" EntitySet="TransactionTB" />
+            <End Role="AdminRecord" EntitySet="AdminRecord" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MixTillYouMakeItModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AdminRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Transaction_ID" Type="Int32" />
+          <Property Name="Order_ID" Type="Int32" />
+          <Property Name="Customer_ID" Type="Int32" />
+          <NavigationProperty Name="CustomerTB" Relationship="Self.FK_AdminRecord_CurstomerTB" FromRole="AdminRecord" ToRole="CustomerTB" />
+          <NavigationProperty Name="OrderTB" Relationship="Self.FK_AdminRecord_OrderTB" FromRole="AdminRecord" ToRole="OrderTB" />
+          <NavigationProperty Name="TransactionTB" Relationship="Self.FK_AdminRecord_TransactionTB" FromRole="AdminRecord" ToRole="TransactionTB" />
+        </EntityType>
+        <EntityType Name="CustomerTB">
+          <Key>
+            <PropertyRef Name="Customer_ID" />
+          </Key>
+          <Property Name="Customer_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerNum" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+          <Property Name="Created_Date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="AdminRecords" Relationship="Self.FK_AdminRecord_CurstomerTB" FromRole="CustomerTB" ToRole="AdminRecord" />
+        </EntityType>
+        <EntityType Name="OrderTB">
+          <Key>
+            <PropertyRef Name="Order_ID" />
+          </Key>
+          <Property Name="Order_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="CreatedTime" Type="Time" Precision="7" />
+          <Property Name="OrderQueueNum" Type="Int32" />
+          <NavigationProperty Name="AdminRecords" Relationship="Self.FK_AdminRecord_OrderTB" FromRole="OrderTB" ToRole="AdminRecord" />
+        </EntityType>
+        <EntityType Name="ProductTB">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+          </Key>
+          <Property Name="Product_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Product_Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Product_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Product_Price" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TransactionTB">
+          <Key>
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="TransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Total_Transaction" Type="Int32" />
+          <Property Name="Payement_Amount" Type="Int32" />
+          <Property Name="Change" Type="Int32" />
+          <NavigationProperty Name="AdminRecords" Relationship="Self.FK_AdminRecord_TransactionTB" FromRole="TransactionTB" ToRole="AdminRecord" />
+        </EntityType>
+        <Association Name="FK_AdminRecord_CurstomerTB">
+          <End Role="CustomerTB" Type="Self.CustomerTB" Multiplicity="0..1" />
+          <End Role="AdminRecord" Type="Self.AdminRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerTB">
+              <PropertyRef Name="Customer_ID" />
+            </Principal>
+            <Dependent Role="AdminRecord">
+              <PropertyRef Name="Customer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AdminRecord_OrderTB">
+          <End Role="OrderTB" Type="Self.OrderTB" Multiplicity="0..1" />
+          <End Role="AdminRecord" Type="Self.AdminRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderTB">
+              <PropertyRef Name="Order_ID" />
+            </Principal>
+            <Dependent Role="AdminRecord">
+              <PropertyRef Name="Order_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AdminRecord_TransactionTB">
+          <End Role="TransactionTB" Type="Self.TransactionTB" Multiplicity="0..1" />
+          <End Role="AdminRecord" Type="Self.AdminRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionTB">
+              <PropertyRef Name="TransactionID" />
+            </Principal>
+            <Dependent Role="AdminRecord">
+              <PropertyRef Name="Transaction_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MixTillYouMakeIt" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdminRecords" EntityType="Self.AdminRecord" />
+          <EntitySet Name="CustomerTBs" EntityType="Self.CustomerTB" />
+          <EntitySet Name="OrderTBs" EntityType="Self.OrderTB" />
+          <EntitySet Name="ProductTBs" EntityType="Self.ProductTB" />
+          <EntitySet Name="TransactionTBs" EntityType="Self.TransactionTB" />
+          <AssociationSet Name="FK_AdminRecord_CurstomerTB" Association="Self.FK_AdminRecord_CurstomerTB">
+            <End Role="CustomerTB" EntitySet="CustomerTBs" />
+            <End Role="AdminRecord" EntitySet="AdminRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AdminRecord_OrderTB" Association="Self.FK_AdminRecord_OrderTB">
+            <End Role="OrderTB" EntitySet="OrderTBs" />
+            <End Role="AdminRecord" EntitySet="AdminRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AdminRecord_TransactionTB" Association="Self.FK_AdminRecord_TransactionTB">
+            <End Role="TransactionTB" EntitySet="TransactionTBs" />
+            <End Role="AdminRecord" EntitySet="AdminRecords" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MixTillYouMakeItModelStoreContainer" CdmEntityContainer="MixTillYouMakeIt">
+          <EntitySetMapping Name="AdminRecords">
+            <EntityTypeMapping TypeName="MixTillYouMakeItModel.AdminRecord">
+              <MappingFragment StoreEntitySet="AdminRecord">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Transaction_ID" ColumnName="Transaction_ID" />
+                <ScalarProperty Name="Order_ID" ColumnName="Order_ID" />
+                <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerTBs">
+            <EntityTypeMapping TypeName="MixTillYouMakeItModel.CustomerTB">
+              <MappingFragment StoreEntitySet="CustomerTB">
+                <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
+                <ScalarProperty Name="CustomerNum" ColumnName="CustomerNum" />
+                <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderTBs">
+            <EntityTypeMapping TypeName="MixTillYouMakeItModel.OrderTB">
+              <MappingFragment StoreEntitySet="OrderTB">
+                <ScalarProperty Name="Order_ID" ColumnName="Order_ID" />
+                <ScalarProperty Name="OrderDesc" ColumnName="OrderDesc" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
+                <ScalarProperty Name="OrderQueueNum" ColumnName="OrderQueueNum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductTBs">
+            <EntityTypeMapping TypeName="MixTillYouMakeItModel.ProductTB">
+              <MappingFragment StoreEntitySet="ProductTB">
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="Product_Category" ColumnName="Product_Category" />
+                <ScalarProperty Name="Product_Name" ColumnName="Product_Name" />
+                <ScalarProperty Name="Product_Price" ColumnName="Product_Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransactionTBs">
+            <EntityTypeMapping TypeName="MixTillYouMakeItModel.TransactionTB">
+              <MappingFragment StoreEntitySet="TransactionTB">
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="Total_Transaction" ColumnName="Total_Transaction" />
+                <ScalarProperty Name="Payement_Amount" ColumnName="Payement_Amount" />
+                <ScalarProperty Name="Change" ColumnName="Change" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

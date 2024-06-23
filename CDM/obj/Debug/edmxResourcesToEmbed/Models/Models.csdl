@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MixTillYouMakeItModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CustomerTB">
+    <Key>
+      <PropertyRef Name="Customer_ID" />
+    </Key>
+    <Property Name="Customer_ID" Type="Int32" Nullable="false" />
+    <Property Name="CustomerNum" Type="String" MaxLength="7" Unicode="true" FixedLength="false" />
+    <Property Name="Created_Date" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="AdminRecords" Relationship="MixTillYouMakeItModel.FK_AdminRecord_CurstomerTB" FromRole="CustomerTB" ToRole="AdminRecord" />
+  </EntityType>
+  <EntityType Name="OrderTB">
+    <Key>
+      <PropertyRef Name="Order_ID" />
+    </Key>
+    <Property Name="Order_ID" Type="Int32" Nullable="false" />
+    <Property Name="OrderDesc" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+    <Property Name="CreatedTime" Type="Time" Precision="7" />
+    <NavigationProperty Name="AdminRecords" Relationship="MixTillYouMakeItModel.FK_AdminRecord_OrderTB" FromRole="OrderTB" ToRole="AdminRecord" />
+    <Property Name="OrderQueueNum" Type="String" MaxLength="3" Unicode="true" FixedLength="false" Nullable="true" />
+    <Property Name="TotalCost" Type="Int32" />
+  </EntityType>
+  <EntityContainer Name="MixTillYouMakeItEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CustomerTBs" EntityType="Self.CustomerTB" />
+    <EntitySet Name="OrderTBs" EntityType="Self.OrderTB" />
+    <EntitySet Name="TransactionTBs" EntityType="MixTillYouMakeItModel.TransactionTB" />
+    <EntitySet Name="AdminRecords" EntityType="MixTillYouMakeItModel.AdminRecord" />
+    <AssociationSet Name="FK_AdminRecord_OrderTB" Association="MixTillYouMakeItModel.FK_AdminRecord_OrderTB">
+      <End Role="OrderTB" EntitySet="OrderTBs" />
+      <End Role="AdminRecord" EntitySet="AdminRecords" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdminRecord_TransactionTB" Association="MixTillYouMakeItModel.FK_AdminRecord_TransactionTB">
+      <End Role="TransactionTB" EntitySet="TransactionTBs" />
+      <End Role="AdminRecord" EntitySet="AdminRecords" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdminRecord_CurstomerTB" Association="MixTillYouMakeItModel.FK_AdminRecord_CurstomerTB">
+      <End Role="CustomerTB" EntitySet="CustomerTBs" />
+      <End Role="AdminRecord" EntitySet="AdminRecords" />
+    </AssociationSet>
+    <EntitySet Name="ProductTBs" EntityType="MixTillYouMakeItModel.ProductTB" />
+  </EntityContainer>
+  <EntityType Name="TransactionTB">
+    <Key>
+      <PropertyRef Name="TransactionID" />
+    </Key>
+    <Property Name="TransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Total_Transaction" Type="Int32" />
+    <Property Name="Payement_Amount" Type="Int32" />
+    <Property Name="Change" Type="Int32" />
+    <NavigationProperty Name="AdminRecords" Relationship="MixTillYouMakeItModel.FK_AdminRecord_TransactionTB" FromRole="TransactionTB" ToRole="AdminRecord" />
+  </EntityType>
+  <EntityType Name="AdminRecord">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Transaction_ID" Type="Int32" />
+    <Property Name="Order_ID" Type="Int32" />
+    <Property Name="Customer_ID" Type="Int32" />
+    <NavigationProperty Name="OrderTB" Relationship="MixTillYouMakeItModel.FK_AdminRecord_OrderTB" FromRole="AdminRecord" ToRole="OrderTB" />
+    <NavigationProperty Name="TransactionTB" Relationship="MixTillYouMakeItModel.FK_AdminRecord_TransactionTB" FromRole="AdminRecord" ToRole="TransactionTB" />
+    <NavigationProperty Name="CustomerTB" Relationship="MixTillYouMakeItModel.FK_AdminRecord_CurstomerTB" FromRole="AdminRecord" ToRole="CustomerTB" />
+  </EntityType>
+  <Association Name="FK_AdminRecord_OrderTB">
+    <End Type="MixTillYouMakeItModel.OrderTB" Role="OrderTB" Multiplicity="0..1" />
+    <End Type="MixTillYouMakeItModel.AdminRecord" Role="AdminRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderTB">
+        <PropertyRef Name="Order_ID" />
+      </Principal>
+      <Dependent Role="AdminRecord">
+        <PropertyRef Name="Order_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdminRecord_TransactionTB">
+    <End Type="MixTillYouMakeItModel.TransactionTB" Role="TransactionTB" Multiplicity="0..1" />
+    <End Type="MixTillYouMakeItModel.AdminRecord" Role="AdminRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TransactionTB">
+        <PropertyRef Name="TransactionID" />
+      </Principal>
+      <Dependent Role="AdminRecord">
+        <PropertyRef Name="Transaction_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdminRecord_CurstomerTB">
+    <End Type="MixTillYouMakeItModel.CustomerTB" Role="CustomerTB" Multiplicity="0..1" />
+    <End Type="MixTillYouMakeItModel.AdminRecord" Role="AdminRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerTB">
+        <PropertyRef Name="Customer_ID" />
+      </Principal>
+      <Dependent Role="AdminRecord">
+        <PropertyRef Name="Customer_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ProductTB">
+    <Key>
+      <PropertyRef Name="Product_ID" />
+    </Key>
+    <Property Name="Product_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Product_Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Product_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Product_Price" Type="Int32" />
+    <Property Name="Product_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>
