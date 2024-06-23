@@ -1,0 +1,23 @@
+USE [MixTillYouMakeIt]
+GO
+
+/****** Object:  Table [dbo].[TransactionTB]    Script Date: 29/05/2024 3:07:15 pm ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[TransactionTB](
+	[TransactionID] [int] IDENTITY(3001,1) NOT NULL,
+	[Total_Transaction] [int] NULL,
+	[Payement_Amount] [int] NULL,
+	[Change] [int] NULL,
+ CONSTRAINT [PK_TransactionTB] PRIMARY KEY CLUSTERED 
+(
+	[TransactionID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+

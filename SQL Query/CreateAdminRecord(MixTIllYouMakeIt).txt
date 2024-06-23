@@ -1,0 +1,44 @@
+USE [MixTillYouMakeIt]
+GO
+
+/****** Object:  Table [dbo].[AdminRecord]    Script Date: 29/05/2024 3:02:48 pm ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[AdminRecord](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Transaction_ID] [int] NULL,
+	[Order_ID] [int] NULL,
+	[Customer_ID] [int] NULL,
+ CONSTRAINT [PK_AdminRecord] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[AdminRecord]  WITH CHECK ADD  CONSTRAINT [FK_AdminRecord_CurstomerTB] FOREIGN KEY([Customer_ID])
+REFERENCES [dbo].[CustomerTB] ([Customer_ID])
+GO
+
+ALTER TABLE [dbo].[AdminRecord] CHECK CONSTRAINT [FK_AdminRecord_CurstomerTB]
+GO
+
+ALTER TABLE [dbo].[AdminRecord]  WITH CHECK ADD  CONSTRAINT [FK_AdminRecord_OrderTB] FOREIGN KEY([Order_ID])
+REFERENCES [dbo].[OrderTB] ([Order_ID])
+GO
+
+ALTER TABLE [dbo].[AdminRecord] CHECK CONSTRAINT [FK_AdminRecord_OrderTB]
+GO
+
+ALTER TABLE [dbo].[AdminRecord]  WITH CHECK ADD  CONSTRAINT [FK_AdminRecord_TransactionTB] FOREIGN KEY([Transaction_ID])
+REFERENCES [dbo].[TransactionTB] ([TransactionID])
+GO
+
+ALTER TABLE [dbo].[AdminRecord] CHECK CONSTRAINT [FK_AdminRecord_TransactionTB]
+GO
+
+
