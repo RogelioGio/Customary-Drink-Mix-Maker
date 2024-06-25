@@ -1,65 +1,16 @@
 ﻿@model CDM.Models.CustomerTB
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Create Order";
 }
 <link href="https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css" rel="stylesheet" integrity="sha256-V6lu+OdYNKTKTsVFBuQsyIlDiRWiOmtC8VQ8Lzdm2i4=" crossorigin="anonymous">
-
 <style>
-    .center {
-        margin: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border: solid, 1px;
-        border-radius: 15px;
-        padding: 100px;
-    }
 
-    img {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    h2.header {
-        text-align: center;
-        padding: 50px;
-    }
-
-    .form-group {
-        display: flex;
-        flex-direction: row;
-        gap: 50px;
-    }
-
-    button.BTN {
-        text-align: center;
-        border: solid, 1px;
-        border-radius: 10px;
-        background-color: white;
-        width: 300px;
-        height: 500px;
-        gap: 50px;
-    }
-
-        button.BTN:hover {
-            border: solid, 2px, #fb8500;
-            background-color: rgba(251, 133, 0, 0.3);
-        }
-
-    box-icon.icon {
-        width: 100px;
-        height: 150px;
-    }
 </style>
-
-<div class="center">
-    <img src="~/Preview.png" width="150" height="150">
+<article>
+    <img src="~/Preview.png">
     @using (Html.BeginForm("Index", "Home", FormMethod.Post))
     {
-        <h2 class="header">CREATE AN ORDER </h2>
-        <div class="form-group">
+        <section>
             @Html.HiddenFor(m => m.CustomerNum, new { id = "CustomerNum" })
             <button class="BTN transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover" type="submit" onclick="SetCustomerNum('OR')">
                 <box-icon class="icon" name='drink'></box-icon>
@@ -69,9 +20,11 @@
                 <box-icon class="icon" type='solid' name='drink'></box-icon>
                 <p>Make a Custom Drink<p>
             </button>
-        </div>
+        </section>
+
     }
-</div>
+
+</article>
 
 <script type="text/javascript">
     function SetCustomerNum(value) {
