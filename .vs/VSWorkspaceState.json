@@ -1,11 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\CDM",
-    "\\CDM\\CDM",
-    "\\CDM\\CDM\\Views",
-    "\\CDM\\CDM\\Views\\Admin"
+    ""
   ],
-  "SelectedNode": "\\CDM\\CDM\\Views\\Admin\\Index.cshtml",
+  "SelectedNode": "\\CDM.sln",
   "PreviewInSolutionExplorer": false
 }
