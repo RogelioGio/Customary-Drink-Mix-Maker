@@ -17,11 +17,45 @@
             margin-right: auto;
         }
 
-        article form {
-            display: flez;
+        article form section {
+            display: flex;
             align-items: center;
             justify-content: center;
+            gap: 25px;
         }
+
+            article form section button {
+                text-align: center;
+                border: solid, 1px;
+                border-radius: 10px;
+                background-color: white;
+                width: 20vw;
+                height: 50vh;
+            }
+
+
+                article form section button p {
+                    font-family: "Jost", sans-serif;
+                    font-optical-sizing: auto;
+                    font-weight: 400;
+                    font-style: normal;
+                    font-size: large;
+                    margin: 25px;
+                }
+
+                article form section button box-icon {
+                    width: 15vw;
+                    height: 20vh;
+                }
+
+                article form section button:hover {
+                    border: solid, 2px, rgba(0, 48, 73);
+                    background-color: rgba(0, 48, 73);
+                    color: white;
+                    fill:white;
+                }
+
+
 </style>
 <article>
     <img src="~/Preview.png">
