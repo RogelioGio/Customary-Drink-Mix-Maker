@@ -2,20 +2,29 @@
 @{
     ViewBag.Title = "Order a Drink";
 }
+<link href="https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css" rel="stylesheet" integrity="sha256-V6lu+OdYNKTKTsVFBuQsyIlDiRWiOmtC8VQ8Lzdm2i4=" crossorigin="anonymous">
 <style>
     article {
         padding: 2vw;
-        border: solid, 1px;
         overflow: hidden;
+        font-family: "Jost", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 400;
+        font-style: normal;
     }
         article h1 {
             margin-bottom: 5vh;
-            border: solid, 1px;
+        }
+        article img {
+            position: fixed;
+            right: 4vw;
+            top: 0px;
+            width: 10vw;
         }
         article form {
-            border: solid, 1px;
             overflow-y: scroll;
-            height: 70vh;
+            padding: 0 3vw;
+            height: 64vh;
         }
             article form section ul {
                 list-style: none;
@@ -23,13 +32,37 @@
                 padding: 0px;
                 gap: 2vw
             }
-                article form section ul li .div {
-                    border: solid, 1px;
-                    display: flex;
-                    flex-direction: column;
-                    width: 15vw;
-                    height: 30vh;
+            article form section h2 {
+                margin: 3vh 0;
+            }
+            article form section ul li .div {
+                border: solid, 1px;
+                border-radius: 1vw;
+                display: flex;
+                flex-direction: column;
+                width: 15vw;
+                height: 40vh;
+                padding: 3vh;
+                cursor: pointer;
+            }
+                article form section ul li .div #id:checked{
+                    background-color: rgba(0, 48, 73);
                 }
+
+                article form section ul li .div:hover {
+                    border: solid, 2px, rgba(0, 48, 73);
+                    background-color: rgba(0, 48, 73);
+                    color: white;
+                }
+
+                    article form section ul li .div input {
+                        margin: 2vh 0 2vh 0;
+                    }
+
+                    article form section ul li .div #id {
+                        
+                    }
+
             article form .Transactions {
                 position: fixed;
                 bottom: 0;
@@ -50,6 +83,7 @@
 
 <article>
     <h1>Order a drink</h1>
+    <img src="~/Preview.png">
     <form method="post" action="@Url.Action("OrderSummary", "Home")">
         <section class="Alcoholic_Drink">
             <h2>Alcoholic Drinks</h2>
@@ -57,10 +91,10 @@
                 @foreach (var product in Model.product)
                 {
                     <li>
-                        <div class="div" id="parent">
-                                <input type="checkbox" name="selectedDrinks" value="@product.Product_Name" id="id" onchange="onQuantity(this)" /> @product.Product_Name (₱@product.Product_Price)
-                                <input type="text" name="quantities" placeholder="Quantity" id="textbox" value="1" disabled oninput="onlyInt(this)" />
-                        </div>
+                        <label class="div transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover" id="parent">
+                            <input type="checkbox" name="selectedDrinks" value="@product.Product_Name" id="id" onchange="onQuantity(this)" /> @product.Product_Name (₱@product.Product_Price)
+                            <input type="text" name="quantities" placeholder="Quantity" id="textbox" value="1" disabled oninput="onlyInt(this)" />
+                        </label>
                     </li>
 
                 }
@@ -74,25 +108,25 @@
                 {
 
                     <li>
-                        <div class="div" id="parent">
-                            
-                                <input type="checkbox" name="selectedDrinks" value="@product.Product_Name" id="id" onchange="onQuantity(this)" /> @product.Product_Name (₱@product.Product_Price)
-                                <input type="text" name="quantities" placeholder="Quantity" id="textbox" value="1" disabled oninput="onlyInt(this)" />
-                           
-                        </div>
+                        <label class="div" id="parent">
+
+                            <input type="checkbox" name="selectedDrinks" value="@product.Product_Name" id="id" onchange="onQuantity(this)" /> @product.Product_Name (₱@product.Product_Price)
+                            <input type="text" name="quantities" placeholder="Quantity" id="textbox" value="1" disabled oninput="onlyInt(this)" />
+
+                        </label>
                     </li>
 
                 }
             </ul>
         </section>
         <section class="Transactions">
-        <input type="hidden" id="fetchdata">
+            <input type="hidden" id="fetchdata">
 
-        <div class="div">
-            <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("Index", "Home")'">Back</button>
-            <button type="submit" class="btn btn-primary">Next</button>
-        </div>
-       
+            <div class="div">
+                <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("Index", "Home")'">Back</button>
+                <button type="submit" class="btn btn-primary">Next</button>
+            </div>
+
         </section>
     </form>
 </article>
@@ -104,6 +138,8 @@
         quantityInput.disabled = !checkbox.checked;
         if (!checkbox.checked) {
             quantityInput.value = "";
+        } else {
+            quantityInput.value = "1";
         }
     }
 
@@ -113,4 +149,4 @@
 
    
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
