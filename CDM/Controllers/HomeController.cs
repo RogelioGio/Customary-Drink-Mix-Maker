@@ -61,7 +61,7 @@ namespace CDM.Controllers
         public ActionResult OrderDrink()
         {
             var Alcohol = db.ProductTBs.Where(p => p.Product_Category == "Alcohol").ToList();
-            var Addon = db.ProductTBs.Where(p => p.Product_Category == "Add-Ons").ToList();
+            var Addon = db.ProductTBs.Where(p => p.Product_Category == "Add-on").ToList();
             var viewmodel = new OrderSummary
             {
                 product = Alcohol,
