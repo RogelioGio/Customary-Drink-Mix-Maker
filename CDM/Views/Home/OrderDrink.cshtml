@@ -2,6 +2,52 @@
 @{
     ViewBag.Title = "Order a Drink";
 }
+<style>
+    article {
+        padding: 2vw;
+        border: solid, 1px;
+        overflow: hidden;
+    }
+        article h1 {
+            margin-bottom: 5vh;
+            border: solid, 1px;
+        }
+        article form {
+            border: solid, 1px;
+            overflow-y: scroll;
+            height: 70vh;
+        }
+            article form section ul {
+                list-style: none;
+                display: flex;
+                padding: 0px;
+                gap: 2vw
+            }
+                article form section ul li .div {
+                    border: solid, 1px;
+                    display: flex;
+                    flex-direction: column;
+                    width: 15vw;
+                    height: 30vh;
+                }
+            article form .Transactions {
+                position: fixed;
+                bottom: 0;
+                right: 0;
+                border: solid, 1px;
+                width: 100%;
+                padding: 5vh 2vw;
+            }
+            article form .Transactions .div {
+                display: flex;
+                flex-direction: row;
+                gap: 3vw;
+            }
+            article form .Transactions .div button{
+                width: 100%;
+            }
+</style>
+
 <article>
     <h1>Order a drink</h1>
     <form method="post" action="@Url.Action("OrderSummary", "Home")">
@@ -12,10 +58,8 @@
                 {
                     <li>
                         <div class="div" id="parent">
-                            <label>
                                 <input type="checkbox" name="selectedDrinks" value="@product.Product_Name" id="id" onchange="onQuantity(this)" /> @product.Product_Name (₱@product.Product_Price)
                                 <input type="text" name="quantities" placeholder="Quantity" id="textbox" value="1" disabled oninput="onlyInt(this)" />
-                            </label>
                         </div>
                     </li>
 
@@ -31,10 +75,10 @@
 
                     <li>
                         <div class="div" id="parent">
-                            <label>
+                            
                                 <input type="checkbox" name="selectedDrinks" value="@product.Product_Name" id="id" onchange="onQuantity(this)" /> @product.Product_Name (₱@product.Product_Price)
                                 <input type="text" name="quantities" placeholder="Quantity" id="textbox" value="1" disabled oninput="onlyInt(this)" />
-                            </label>
+                           
                         </div>
                     </li>
 
@@ -43,8 +87,12 @@
         </section>
         <section class="Transactions">
         <input type="hidden" id="fetchdata">
-        <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("Index", "Home")'">Back</button>
-        <button type="submit" class="btn btn-primary">Next</button>
+
+        <div class="div">
+            <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("Index", "Home")'">Back</button>
+            <button type="submit" class="btn btn-primary">Next</button>
+        </div>
+       
         </section>
     </form>
 </article>
