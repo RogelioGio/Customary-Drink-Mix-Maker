@@ -45,24 +45,29 @@
                 padding: 3vh;
                 cursor: pointer;
             }
-                article form section ul li .div #id:checked{
-                    background-color: rgba(0, 48, 73);
-                }
 
-                article form section ul li .div:hover {
+                article form section ul li .div:hover{
                     border: solid, 2px, rgba(0, 48, 73);
                     background-color: rgba(0, 48, 73);
                     color: white;
                 }
 
-                    article form section ul li .div input {
+                    article form section ul li .div input{
                         margin: 2vh 0 2vh 0;
                     }
 
-                    article form section ul li .div #id {
-                        
-                    }
+                article form section ul li .div #id {
+                    opacity: 0;
+                    height: 0;
+                    width: 0;
+                }
 
+                article form section ul li .div:has(input[type=checkbox]:checked) {
+                    border: solid, 2px, rgba(0, 48, 73);
+                    background-color: rgba(0, 48, 73);
+                    color: white;
+              
+                }
             article form .Transactions {
                 position: fixed;
                 bottom: 0;
