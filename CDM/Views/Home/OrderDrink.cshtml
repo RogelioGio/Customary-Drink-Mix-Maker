@@ -12,15 +12,19 @@
         font-weight: 400;
         font-style: normal;
     }
-        article h1 {
-            margin-bottom: 5vh;
+        article .header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
         }
-        article img {
-            position: fixed;
-            right: 4vw;
-            top: 0px;
-            width: 10vw;
-        }
+            article .header img {
+                height: 20vh;
+            }
+
+            article .header h1 {
+                margin-left: 2vw;
+            }
+
         article form {
             overflow-y: scroll;
             padding: 0 3vw;
@@ -68,27 +72,36 @@
                     color: white;
               
                 }
+
             article form .Transactions {
                 position: fixed;
                 bottom: 0;
                 right: 0;
-                border: solid, 1px;
                 width: 100%;
-                padding: 5vh 2vw;
+                height: 15vh;
+                padding: 3vh 2vw;
+                background-color: rgba(0, 48, 73);
             }
-            article form .Transactions .div {
+            article form .Transactions{
                 display: flex;
                 flex-direction: row;
                 gap: 3vw;
             }
-            article form .Transactions .div button{
+            article form .Transactions button{
                 width: 100%;
+                font-size: large;
+                border-radius: 1vw;
+                border: solid 1px black;
+                background-color: white;
+                color: black;
             }
 </style>
 
 <article>
-    <h1>Order a drink</h1>
-    <img src="~/Preview.png">
+    <section class="header">
+        <img src="~/Preview.png">
+        <h1>Order a drink</h1>
+    </section>
     <form method="post" action="@Url.Action("OrderSummary", "Home")">
         <section class="Alcoholic_Drink">
             <h2>Alcoholic Drinks</h2>
@@ -98,7 +111,7 @@
                     <li>
                         <label class="div transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover" id="parent">
                             <input type="checkbox" name="selectedDrinks" value="@product.Product_Name" id="id" onchange="onQuantity(this)" /> @product.Product_Name (₱@product.Product_Price)
-                            <input type="text" name="quantities" placeholder="Quantity" id="textbox" value="1" disabled oninput="onlyInt(this)" />
+                            <input type="text" name="quantities" placeholder="0" id="textbox" value="1" disabled oninput="onlyInt(this)" />
                         </label>
                     </li>
 
@@ -113,10 +126,10 @@
                 {
 
                     <li>
-                        <label class="div" id="parent">
+                        <label class="div transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover" id="parent">
 
                             <input type="checkbox" name="selectedDrinks" value="@product.Product_Name" id="id" onchange="onQuantity(this)" /> @product.Product_Name (₱@product.Product_Price)
-                            <input type="text" name="quantities" placeholder="Quantity" id="textbox" value="1" disabled oninput="onlyInt(this)" />
+                            <input type="text" name="quantities" placeholder="0" id="textbox" value="1" disabled oninput="onlyInt(this)" />
 
                         </label>
                     </li>
@@ -126,12 +139,8 @@
         </section>
         <section class="Transactions">
             <input type="hidden" id="fetchdata">
-
-            <div class="div">
-                <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("Index", "Home")'">Back</button>
-                <button type="submit" class="btn btn-primary">Next</button>
-            </div>
-
+            <button type="submit" class="btn btn-primary transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-105-hover">Cancel</button>
+            <button type="button" class="btn btn-primary transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-105-hover" onclick="window.location='@Url.Action("Index", "Home")'">Confirm Order</button>
         </section>
     </form>
 </article>
