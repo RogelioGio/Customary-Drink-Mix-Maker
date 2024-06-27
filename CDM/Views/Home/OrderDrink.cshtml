@@ -4,13 +4,55 @@
 }
 <link href="https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css" rel="stylesheet" integrity="sha256-V6lu+OdYNKTKTsVFBuQsyIlDiRWiOmtC8VQ8Lzdm2i4=" crossorigin="anonymous">
 <style>
-    article {
-        padding: 2vw;
-        overflow: hidden;
+    main {
         font-family: "Jost", sans-serif;
         font-optical-sizing: auto;
         font-weight: 400;
         font-style: normal;
+        overflow: hidden;
+    }
+    aside {
+        width: 20%;
+        height: 100vh;
+        float: right;
+        background-color: black;
+        color:white;
+    }
+        aside .header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 1vw;
+            margin-bottom: 1vh;
+            justify-content: center;
+        }
+            aside .header box-icon {
+                width: auto;
+                height: 6vh;
+            }
+            aside .header p {
+                font-size: x-large;
+                margin: 0 0 0 2vw;
+            }
+        aside section ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            padding: 1vw;
+            gap: 2vw
+        }
+            aside section ul li .div {
+                align-items: center;
+                border: solid, 1px;
+                border-radius: 1vw;
+                display: flex;
+                width: 17vw;
+                height: 10vh;
+                padding: 2vh;
+            }
+    article {
+        padding: 2vw;
+        overflow: hidden;
     }
         article .header {
             display: flex;
@@ -28,7 +70,7 @@
         article form {
             overflow-y: scroll;
             padding: 0 3vw;
-            height: 64vh;
+            height: 60vh;
         }
             article form section ul {
                 list-style: none;
@@ -96,7 +138,25 @@
                 color: black;
             }
 </style>
+<aside>
+    <section class="header">
+        <box-icon name='cart-alt' color='#ffffff'></box-icon>
+        <p>Your Orders</p>
+    </section>
+    <section class="item">
+        <ul class="productOrder">
+            @foreach (var product in Model.product)
+            {
+                <li>
+                    <label class="div" id="parent">
+                        <input type="checkbox" name="selectedDrinks" value="@product.Product_Name" id="id" onchange="onQuantity(this)" /> @product.Product_Name (₱@product.Product_Price)
+                    </label>
+                </li>
 
+            }
+        </ul>
+    </section>
+</aside>
 <article>
     <section class="header">
         <img src="~/Preview.png">
@@ -109,7 +169,7 @@
                 @foreach (var product in Model.product)
                 {
                     <li>
-                        <label class="div transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover" id="parent">
+                        <label class="div transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover" id="parent" onclick="addItem(@product.Product_ID)">
                             <input type="checkbox" name="selectedDrinks" value="@product.Product_Name" id="id" onchange="onQuantity(this)" /> @product.Product_Name (₱@product.Product_Price)
                             <input type="text" name="quantities" placeholder="0" id="textbox" value="1" disabled oninput="onlyInt(this)" />
                         </label>
@@ -145,7 +205,6 @@
     </form>
 </article>
 
-
 <script>
     function onQuantity(checkbox) {
         var quantityInput = checkbox.nextElementSibling;
@@ -161,6 +220,14 @@
         input.value = input.value.replace(/[^0-9]/g, '');
     }
 
+    let productOrder = document.querySelector('.productOrder');
+    function addItem(id) {
+        productOrder.innerHTML = '';
+        let newItem = document.createElement('li');
+        newItem.innerHTML = id;
+        productOrder.appendChild(newItem);
+    }
    
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
