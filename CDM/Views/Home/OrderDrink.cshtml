@@ -2,117 +2,221 @@
 @{
     ViewBag.Title = "Order a Drink";
 }
-
-
+<link href="https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css" rel="stylesheet" integrity="sha256-V6lu+OdYNKTKTsVFBuQsyIlDiRWiOmtC8VQ8Lzdm2i4=" crossorigin="anonymous">
 <style>
-    .center {
-        margin: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border: solid, 1px;
-        border-radius: 15px;
-        padding: 100px;
-        
+    main {
+        font-family: "Jost", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 400;
+        font-style: normal;
+        overflow: hidden;
     }
-    .div {
-        width: 100%;
-        height: 100px;
-        border: solid, 1px;
-        border-radius: 15px;
-        position: relative;
-        margin: 20px 0px;
-        background-color: white;
+    aside {
+        width: 20%;
+        height: 100vh;
+        float: right;
+        background-color: black;
+        color:white;
     }
-
-    .divActive {
-        width: 100%;
-        height: 100px;
-        border: solid, 1px;
-        border-radius: 15px;
-        position: relative;
-        margin: 20px 0px;
-        background-color: red;
-    }
-
-        .divActive label {
-            margin: 0;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            
+        aside .header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 4vw 1vw;
+            margin-bottom: 1vh;
+            justify-content: center;
         }
-
-        .div label {
-            margin: 0;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            aside .header box-icon {
+                width: auto;
+                height: 6vh;
+            }
+            aside .header p {
+                font-size: x-large;
+                margin: 0 0 0 2vw;
+            }
+        aside section .productOrder {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 1vw;
+            gap: 1vw
         }
-    
+            aside section .productOrder li .div {
+                border: solid, 1px;
+                border-radius: 1vw;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                width: 17vw;
+                height: 10vh;
+                padding: 3vh;
+            }
+                aside section .productOrder li .div p {
+                    margin: 0;
+                }
+
+    article {
+        padding: 2vw;
+        overflow: hidden;
+    }
+        article .header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+            article .header img {
+                height: 20vh;
+            }
+
+            article .header h1 {
+                margin-left: 2vw;
+            }
+
+        article form {
+            overflow-y: scroll;
+            padding: 0 3vw;
+            height: 60vh;
+        }
+            article form section ul {
+                list-style: none;
+                display: flex;
+                padding: 0px;
+                gap: 2vw
+            }
+            article form section h2 {
+                margin: 3vh 0;
+            }
+            article form section ul li .div {
+                border: solid, 1px;
+                border-radius: 1vw;
+                display: flex;
+                flex-direction: column;
+                width: 15vw;
+                height: 40vh;
+                padding: 3vh;
+                cursor: pointer;
+            }
+
+                article form section ul li .div:hover{
+                    border: solid, 2px, rgba(0, 48, 73);
+                    background-color: rgba(0, 48, 73);
+                    color: white;
+                }
+
+                    article form section ul li .div input{
+                        margin: 2vh 0 2vh 0;
+                    }
+
+                article form section ul li .div #id {
+                    opacity: 0;
+                    height: 0;
+                    width: 0;
+                }
+
+                article form section ul li .div:has(input[type=checkbox]:checked) {
+                    border: solid, 2px, rgba(0, 48, 73);
+                    background-color: rgba(0, 48, 73);
+                    color: white;
+              
+                }
+
+            article form .Transactions {
+                position: fixed;
+                bottom: 0;
+                right: 0;
+                width: 100%;
+                height: 15vh;
+                padding: 3vh 2vw;
+                background-color: rgba(0, 48, 73);
+            }
+            article form .Transactions{
+                display: flex;
+                flex-direction: row;
+                gap: 3vw;
+            }
+            article form .Transactions button{
+                width: 100%;
+                font-size: large;
+                border-radius: 1vw;
+                border: solid 1px black;
+                background-color: white;
+                color: black;
+            }
 </style>
-
-<div class="center container">
-    <h2>ORDER PREMADE DRINK</h2>
-    
+<aside>
+    <section class="header">
+        <box-icon name='cart-alt' color='#ffffff'></box-icon>
+        <p>Your Orders</p>
+    </section>
+    <section class="item">
+        <ul class="productOrder">
+            
+        </ul>
+    </section>
+</aside>
+<article>
+    <section class="header">
+        <img src="~/Preview.png">
+        <h1>Order a drink</h1>
+    </section>
     <form method="post" action="@Url.Action("OrderSummary", "Home")">
-        <div class="row">
-            <div class="col">
-                <ul style="list-style: none;">
-                    <h2>Alcoholic Drinks</h2>
-                    @foreach (var product in Model.product)
-                    {
+        <section class="Alcoholic_Drink">
+            <h2>Alcoholic Drinks</h2>
+            <ul>
+                @foreach (var product in Model.product)
+                {
+                    <li>
+                        <label class="div transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover" id="parent">
+                            <input type="checkbox" name="selectedDrinks" value="@product.Product_Name" id="id" onchange="products_addon(this, '@product.Product_ID', '@product.Product_Name', '@product.Product_Price')" /> @product.Product_Name (₱@product.Product_Price)
+                            <input type="text" name="quantities" placeholder="0" id="textbox" value="1" disabled oninput="onlyInt(this)" />
+                        </label>
+                    </li>
 
-                        <li>
-                            <div class="div" id="parent">
-                                <label>
-                                    <input type="checkbox" name="selectedDrinks" value="@product.Product_Name" id="id" onchange="onQuantity(this)" /> @product.Product_Name (₱@product.Product_Price)
-                                    <input type="text" name="quantities" placeholder="Quantity" id="textbox" value="1" disabled oninput="onlyInt(this)" />
-                                </label>
-                            </div>
-                        </li>
+                }
+            </ul>
+        </section>
+        <section class="Add_Ons">
+            <h2>Add-Ons</h2>
+            <ul>
 
-                    }
-                </ul>
-            </div>
-                       
-            <div class="col">
-                <ul style="list-style: none;">
-                    <h2>Add-Ons</h2>
-                    @foreach (var product in Model.addon)
-                    {
+                @foreach (var product in Model.addon)
+                {
 
-                        <li>
-                            <div class="div" id="parent">
-                                <label>
-                                    <input type="checkbox" name="selectedDrinks" value="@product.Product_Name" id="id" onchange="onQuantity(this)" /> @product.Product_Name (₱@product.Product_Price)
-                                    <input type="text" name="quantities" placeholder="Quantity" id="textbox" value="1" disabled oninput="onlyInt(this)" />
-                                </label>
-                            </div>
-                        </li>
+                    <li>
+                        <label class="div transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover" id="parent">
 
-                    }
-                </ul>
-            </div>
-        </div>
-        <input type="hidden" id="fetchdata">
-        <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("Index", "Home")'">Back</button>
-        <button type="submit" class="btn btn-primary">Next</button>
+                            <input type="checkbox" name="selectedDrinks" value="@product.Product_Name" id="id" onchange="onQuantity(this)" /> @product.Product_Name (₱@product.Product_Price)
+                            <input type="text" name="quantities" placeholder="0" id="textbox" value="1" disabled oninput="onlyInt(this)" />
 
+                        </label>
+                    </li>
+
+                }
+            </ul>
+        </section>
+        <section class="Transactions">
+            <input type="hidden" id="fetchdata">
+            <button type="button" class="btn btn-primary transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-105-hover" onclick="window.location='@Url.Action("Index", "Home")'">Cancel</button>
+            <button type="submit" class="btn btn-primary transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-105-hover">Confirm Order</button>
+        </section>
     </form>
-
-
-</div>
+</article>
 
 <script>
+    function products_addon(checkbox, id, Name, Price){
+        onQuantity(checkbox);
+        addItem(checkbox, id, Name, Price);
+    };
+
+
     function onQuantity(checkbox) {
         var quantityInput = checkbox.nextElementSibling;
         quantityInput.disabled = !checkbox.checked;
         if (!checkbox.checked) {
             quantityInput.value = "";
+        } else {
+            quantityInput.value = "1";
         }
     }
 
@@ -120,6 +224,44 @@
         input.value = input.value.replace(/[^0-9]/g, '');
     }
 
-   
-</script>
+    //additemstotheorderlist
+    let productOrder = document.querySelector('.productOrder');
+    let ListofProducts = []
+    function addItem(checkbox, id, Name, Price)
+    {
+        let quantity = 1
+        var key = id;
+        if (checkbox.checked) {
+            if (ListofProducts[key] == null) {
+                ListofProducts[key] = {
+                    ProductName: Name,
+                    ProductPrice: Price,
+                    ProductQuantity: quantity
+                };
+            }
+        } else {
+            delete ListofProducts[key]
+        }
+        reloadCard()
+    }
 
+
+    function reloadCard(){
+        productOrder.innerHTML = '';
+        Object.keys(ListofProducts).forEach(key => {
+            let value = ListofProducts[key];
+
+
+            let newItem = document.createElement('li');
+            newItem.innerHTML = `
+            <div class="div">
+            <p>${value.ProductName} - ${value.ProductPrice}<p></br>
+            <p>Qty. - ${value.ProductQuantity}</p>
+            </div>`;
+            productOrder.appendChild(newItem)
+        });
+    }
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
