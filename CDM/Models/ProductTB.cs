@@ -18,5 +18,6 @@ namespace CDM.Models
         public string Product_Category { get; set; }
         public string Product_Name { get; set; }
         public int Product_Price { get; set; }
+        public string imageUrlString { get; set; }
     }
 }

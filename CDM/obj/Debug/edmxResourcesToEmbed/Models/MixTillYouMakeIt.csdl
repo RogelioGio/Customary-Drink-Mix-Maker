@@ -40,6 +40,7 @@
     <Property Name="Product_Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Product_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Product_Price" Type="Int32" />
+    <Property Name="imageUrlString" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="TransactionTB">
     <Key>

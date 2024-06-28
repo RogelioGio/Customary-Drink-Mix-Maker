@@ -24,11 +24,9 @@ namespace CDM.Models
         public string OrderDesc { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.TimeSpan> CreatedTime { get; set; }
-        public int OrderQueueNum { get; set; }
+        public Nullable<int> OrderQueueNum { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AdminRecord> AdminRecords { get; set; }
-
-        
     }
 }
