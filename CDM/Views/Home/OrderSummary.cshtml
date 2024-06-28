@@ -3,31 +3,21 @@
 @{
     ViewBag.Title = "Order Summary";
 }
-<style>
-    .center {
-        margin: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border: solid, 1px;
-        border-radius: 15px;
-        padding: 100px;
-    }
-</style>
-
-<div class="center">
-<h2>Order Summary</h2>
-
-<ul>
-    @foreach (var item in Model.OrderItems)
-    {
-        <li>@item.Drink x @item.Quantity - ₱@item.TotalCost</li>
-    }
-</ul>
-
-<p>Total cost - ₱@Model.TotalCost</p>
-
-<button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("OrderDrink", "Home")'">Back</button>
-<button type="submit" class="btn bg-primary" onclick="window.location='@Url.Action("Receipt", "Home")'">Next</button>
-</div>
+<article>
+    <section class="header">
+        <h2>Order Summary</h2>
+    </section>
+    <section class="productToOrder">
+        <ul>
+            @foreach (var item in Model.OrderItems)
+            {
+                <li>@item.Drink x @item.Quantity - ₱@item.TotalCost</li>
+            }
+        </ul>
+        <p>Total cost - ₱@Model.TotalCost</p>
+    </section>
+    <section class="buttons">
+        <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("OrderDrink", "Home")'">Cancel</button>
+        <button type="submit" class="btn btn-primary" onclick="window.location='@Url.Action("Receipt", "Home")'">Confirm Order</button>
+    </section>
+</article>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MixTillYouMakeItModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MixTillYouMakeItModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AdminRecord">
           <Key>
             <PropertyRef Name="ID" />
@@ -40,6 +40,7 @@
           <Property Name="Product_Category" Type="nvarchar" MaxLength="50" />
           <Property Name="Product_Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Product_Price" Type="int" />
+          <Property Name="imageUrlString" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="TransactionTB">
           <Key>
@@ -105,8 +106,7 @@
             <End Role="AdminRecord" EntitySet="AdminRecord" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MixTillYouMakeItModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -150,6 +150,7 @@
           <Property Name="Product_Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Product_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Product_Price" Type="Int32" />
+          <Property Name="imageUrlString" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TransactionTB">
           <Key>
@@ -255,6 +256,7 @@
           <EntitySetMapping Name="ProductTBs">
             <EntityTypeMapping TypeName="MixTillYouMakeItModel.ProductTB">
               <MappingFragment StoreEntitySet="ProductTB">
+                <ScalarProperty Name="imageUrlString" ColumnName="imageUrlString" />
                 <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
                 <ScalarProperty Name="Product_Category" ColumnName="Product_Category" />
                 <ScalarProperty Name="Product_Name" ColumnName="Product_Name" />

@@ -35,6 +35,7 @@
     <Property Name="Product_Category" Type="nvarchar" MaxLength="50" />
     <Property Name="Product_Name" Type="nvarchar" MaxLength="50" />
     <Property Name="Product_Price" Type="int" />
+    <Property Name="imageUrlString" Type="nvarchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="TransactionTB">
     <Key>

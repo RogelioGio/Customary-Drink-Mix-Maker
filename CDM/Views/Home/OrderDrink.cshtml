@@ -34,6 +34,10 @@
                 font-size: x-large;
                 margin: 0 0 0 2vw;
             }
+        aside .item {
+            overflow-y: scroll;
+            height: 40vh;
+        }
         aside section .productOrder {
             list-style: none;
             display: flex;
@@ -55,7 +59,19 @@
                 aside section .productOrder li .div p {
                     margin: 0;
                 }
-
+        aside .totalAmount {
+            position: absolute;
+            bottom: 20vh;
+            padding: 1vw;
+            width: 20%;
+        }
+            aside .totalAmount span {
+                display:block;
+                border-bottom: solid 1px white;
+            }
+            aside .totalAmount div {
+                padding-left: 1vw;
+            }
     article {
         padding: 2vw;
         overflow: hidden;
@@ -113,7 +129,9 @@
                     height: 0;
                     width: 0;
                 }
-
+                article form section ul li .div img {
+                    height: 25vh;
+                }
                 article form section ul li .div:has(input[type=checkbox]:checked) {
                     border: solid, 2px, rgba(0, 48, 73);
                     background-color: rgba(0, 48, 73);
@@ -154,6 +172,10 @@
             
         </ul>
     </section>
+    <section class="totalAmount">
+        <span></span>
+        <div>Total:<p id="totalamount">₱0.00</p></div>
+    </section>
 </aside>
 <article>
     <section class="header">
@@ -168,8 +190,9 @@
                 {
                     <li>
                         <label class="div transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover" id="parent">
+                            <img src="~/ProductAssets/@product.imageUrlString">
                             <input type="checkbox" name="selectedDrinks" value="@product.Product_Name" id="id" onchange="products_addon(this, '@product.Product_ID', '@product.Product_Name', '@product.Product_Price')" /> @product.Product_Name (₱@product.Product_Price)
-                            <input type="text" name="quantities" placeholder="0" id="textbox" value="1" disabled oninput="onlyInt(this)" />
+                            <input type="hidden" name="quantities" placeholder="0" id="Qtextbox" value="1" disabled oninput="onlyInt(this)" />
                         </label>
                     </li>
 
@@ -185,9 +208,9 @@
 
                     <li>
                         <label class="div transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover" id="parent">
-
-                            <input type="checkbox" name="selectedDrinks" value="@product.Product_Name" id="id" onchange="onQuantity(this)" /> @product.Product_Name (₱@product.Product_Price)
-                            <input type="text" name="quantities" placeholder="0" id="textbox" value="1" disabled oninput="onlyInt(this)" />
+                            <img src="~/ProductAssets/@product.imageUrlString">
+                            <input type="checkbox" name="selectedDrinks" value="@product.Product_Name" id="id" onchange="products_addon(this, '@product.Product_ID', '@product.Product_Name', '@product.Product_Price')" /> @product.Product_Name (₱@product.Product_Price)
+                            <input type="hidden" name="quantities" placeholder="0" id="textbox" value="1" disabled oninput="onlyInt(this)" />
 
                         </label>
                     </li>
@@ -229,14 +252,13 @@
     let ListofProducts = []
     function addItem(checkbox, id, Name, Price)
     {
-        let quantity = 1
         var key = id;
         if (checkbox.checked) {
             if (ListofProducts[key] == null) {
                 ListofProducts[key] = {
                     ProductName: Name,
                     ProductPrice: Price,
-                    ProductQuantity: quantity
+                    ProductQuantity: 1
                 };
             }
         } else {
@@ -248,18 +270,37 @@
 
     function reloadCard(){
         productOrder.innerHTML = '';
+        let total = 0;
+        let count = 0;
         Object.keys(ListofProducts).forEach(key => {
-            let value = ListofProducts[key];
-
+            let value = ListofProducts[key]
+            
+            total += value.ProductPrice * value.ProductQuantity;
+            count += value.quantity;
 
             let newItem = document.createElement('li');
             newItem.innerHTML = `
             <div class="div">
             <p>${value.ProductName} - ${value.ProductPrice}<p></br>
             <p>Qty. - ${value.ProductQuantity}</p>
+            <section class="quantityCount">
+            <button onclick="changeQuantity('${key}', ${value.ProductQuantity + 1})">+</button>
+            <button onclick="changeQuantity('${key}', ${value.ProductQuantity - 1})">-</button>
+            </section>
             </div>`;
             productOrder.appendChild(newItem)
         });
+        document.getElementById('totalamount').innerText = `₱${total.toLocaleString()}`;
+    }
+
+    function changeQuantity(key, newQuantity) {
+        if (newQuantity <= 0) {
+            delete ListofProducts[key]
+        } else {
+            ListofProducts[key].ProductQuantity = newQuantity
+            document.getElementById('Qtextbox').value = newQuantity
+        }
+        reloadCard();
     }
 
 </script>

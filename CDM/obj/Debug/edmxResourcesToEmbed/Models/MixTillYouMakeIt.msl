@@ -34,6 +34,7 @@
     <EntitySetMapping Name="ProductTBs">
       <EntityTypeMapping TypeName="MixTillYouMakeItModel.ProductTB">
         <MappingFragment StoreEntitySet="ProductTB">
+          <ScalarProperty Name="imageUrlString" ColumnName="imageUrlString" />
           <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
           <ScalarProperty Name="Product_Category" ColumnName="Product_Category" />
           <ScalarProperty Name="Product_Name" ColumnName="Product_Name" />
