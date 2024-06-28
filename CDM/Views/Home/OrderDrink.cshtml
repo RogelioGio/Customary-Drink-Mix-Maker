@@ -208,6 +208,7 @@
 
                     <li>
                         <label class="div transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover" id="parent">
+                            <img src="~/ProductAssets/@product.imageUrlString">
                             <input type="checkbox" name="selectedDrinks" value="@product.Product_Name" id="id" onchange="products_addon(this, '@product.Product_ID', '@product.Product_Name', '@product.Product_Price')" /> @product.Product_Name (₱@product.Product_Price)
                             <input type="hidden" name="quantities" placeholder="0" id="textbox" value="1" disabled oninput="onlyInt(this)" />
 
