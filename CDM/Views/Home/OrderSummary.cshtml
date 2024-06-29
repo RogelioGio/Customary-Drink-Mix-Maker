@@ -3,21 +3,99 @@
 @{
     ViewBag.Title = "Order Summary";
 }
+<link href="https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css" rel="stylesheet" integrity="sha256-V6lu+OdYNKTKTsVFBuQsyIlDiRWiOmtC8VQ8Lzdm2i4=" crossorigin="anonymous">
+<style>
+    main {
+        font-family: "Jost", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 400;
+        font-style: normal;
+        overflow: hidden;
+    }
+    article {
+        padding: 2vw;
+        overflow: hidden;
+    }
+        article .header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+            article .header img {
+                height: 20vh;
+            }
+            article .header h1{
+                margin-left: 2vw;
+            }
+            article .header .totalCost{
+                position: absolute;
+                right: 70px;
+                margin: 0
+            }
+        article .productToOrder ul {
+            list-style: none;
+            height: 60vh;
+            padding: 0;
+            overflow-y:scroll;
+        }
+            article .productToOrder ul li {
+                border: solid, 1px, rgba(0, 48, 73);
+                border-radius: 1vw;
+                display:flex;
+                flex-direction: row;
+                align-items: center;
+                padding: 1vh 5vh 1vh 1vh; 
+                margin: 0 0 1vh 0;
+            }
+                article .productToOrder ul li img {
+                    width: 10vw;
+                }
+                article .productToOrder ul li .totalCost {
+                    margin-left: auto;
+                    
+                }
+                    article .productToOrder ul li .totalCost p {
+                        margin: 0;
+                    }
+        article .buttons{
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 15vh;
+            padding: 3vh 2vw;
+            background-color: rgba(0, 48, 73);
+        }
+
+</style>
 <article>
     <section class="header">
-        <h2>Order Summary</h2>
+        <img src="~/Preview.png">
+        <h1>Order Summary</h1>
+        <h2 class="totalCost">Total cost: ₱@Model.TotalCost</h2>
     </section>
     <section class="productToOrder">
         <ul>
             @foreach (var item in Model.OrderItems)
             {
-                <li>@item.Drink x @item.Quantity - ₱@item.TotalCost</li>
+                <li>
+                    <img src="~/ProductAssets/@item.imgString">
+                    <div class="itemDesc">
+                        <h2>@item.Drink</h2>
+                        <p>Quantity: @item.Quantity</p>
+                    </div>
+                    <div class="totalCost">
+                        <p>Total Price: ₱@item.TotalCost</p>
+                    </div>
+                </li>
             }
         </ul>
-        <p>Total cost - ₱@Model.TotalCost</p>
     </section>
     <section class="buttons">
         <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("OrderDrink", "Home")'">Cancel</button>
         <button type="submit" class="btn btn-primary" onclick="window.location='@Url.Action("Receipt", "Home")'">Confirm Order</button>
     </section>
 </article>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>

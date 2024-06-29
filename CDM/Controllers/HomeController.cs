@@ -90,12 +90,14 @@ namespace CDM.Controllers
                 int quantity = quantities[i];
                 int totalCost = select.Product_Price * quantity;
                 string order = drink + "(x" + quantity.ToString() + ")" + " - ₱" + totalCost;
-                
+
+
                 viewModel.OrderItems.Add(new OrderItem
                 {
                     Drink = drink,
                     Quantity = quantity,
-                    TotalCost = totalCost
+                    TotalCost = totalCost,
+                    imgString = select.imageUrlString
                 });
 
                 viewModel.SelectedDrinks.Add(order);
