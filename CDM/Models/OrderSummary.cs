@@ -17,6 +17,7 @@ namespace CDM.Models
         public string Drink { get; set; }
         public int Quantity { get; set; }
         public int TotalCost { get; set; }
+        public string imgString {  get; set; }
     }
     public class OrderSummary
     {
