@@ -34,6 +34,9 @@ namespace CDM.Models
         public ProductTB Products { get; set; }
     }
 
-    
+    //cutomaryDrinks model
+    public class CustomDrinkModel {
+        public List<ProductTB> productList { get; set; }
+    }
     
 }

@@ -137,7 +137,11 @@ namespace CDM.Controllers
 
         public ActionResult MakeYourOwnDrink()
         {
-            return View();
+            var viewmodel = new CustomDrinkModel
+            {
+                productList = db.ProductTBs.Where(p => p.Product_Category == "Alcohol").ToList()
+            };
+            return View(viewmodel);
         }
 
         [HttpPost]
@@ -240,8 +244,8 @@ namespace CDM.Controllers
 
         private int CalculateTotalCost(CustomDrink drink)
         {
-            int baseCost = db.ProductTBs.Where(p => p.Product_Name == drink.BaseDrink).Where(p => p.Product_Category == "Base").FirstOrDefault().Product_Price;
-            int layersCost = drink.Layers.Sum(layer => db.ProductTBs.Where(p => p.Product_Name == layer.Shot).Where(p => p.Product_Category == "Shot").FirstOrDefault().Product_Price);
+            int baseCost = db.ProductTBs.Where(p => p.Product_Name == drink.BaseDrink).FirstOrDefault().Product_Price;
+            int layersCost = drink.Layers.Sum(layer => db.ProductTBs.Where(p => p.Product_Name == layer.Shot).FirstOrDefault().Product_Price);
             return baseCost + layersCost;
         }
 

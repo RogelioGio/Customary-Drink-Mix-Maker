@@ -1,50 +1,37 @@
-﻿@{
+﻿@model CDM.Models.CustomDrinkModel
+@{
     ViewBag.Title = "Make Your Own Drink";
 }
+<article>
+    <h2>Create Your Drink</h2>
+    <form id="drinkForm" method="post" action="/Home/MakeYourOwnDrink">
+        <section class="Base">
+            <ul>
+                @foreach(var Base in Model.productList) { 
+                    <li>
+                        <label class="div transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover" id="parent">
+                            <!-- <img src="~/ProductAssets/@Base.imageUrlString">-->
+                            <input type="radio" name="BaseDrink" value="@Base.Product_Name" id="id" onchange="products_addon(this, '@Base.Product_ID', '@Base.Product_Name', '@Base.Product_Price')" /> @Base.Product_Name (₱@Base.Product_Price)
+                        </label>
+                    </li>
+                }
+            </ul>
+        </section>
+        <secction class="DrinkSize">
+            <label>Size</label><br />
+            <input type="radio" id="SizeSmall" name="Size" value="Small" onchange="updateLayers(3)" /> Small - (8oz)
+            <input type="radio" id="SizeMedium" name="Size" value="Medium" onchange="updateLayers(4)" /> Medium - (16oz)
+            <input type="radio" id="SizeLarge" name="Size" value="Large" onchange="updateLayers(5)" /> Large - (22oz)
+        </secction>
+        <section id="layersContainer">
 
-<style>
-    .center {
-        margin: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border: solid, 1px;
-        border-radius: 15px;
-        padding: 100px;
-    }
-</style>
-
-<div class="center">
-<h2>Make Your Own Drink</h2>
-
-<form id="drinkForm" method="post" action="/Home/MakeYourOwnDrink">
-    <div>
-        <label for="BaseDrink">Base drink</label>
-        <select id="BaseDrink" name="BaseDrink">
-            <option value="Beer">Beer - 35</option>
-            <option value="Gin">Gin - 75</option>
-            <option value="Wine">Wine - 115</option>
-            <option value="Sake">Sake - 150</option>
-            <option value="Whiskey">Whiskey - 185</option>
-        </select>
-    </div>
-    <div>
-        <label>Size</label><br />
-        <input type="radio" id="SizeSmall" name="Size" value="Small" onchange="updateLayers(3)" /> Small - (8oz)
-        <input type="radio" id="SizeMedium" name="Size" value="Medium" onchange="updateLayers(4)" /> Medium - (16oz)
-        <input type="radio" id="SizeLarge" name="Size" value="Large" onchange="updateLayers(5)" /> Large - (22oz)
-    </div>
-    <div id="layersContainer"></div>
-
-    <div>
-        
-
-        <button type="button" onclick="window.location='@Url.Action("Index", "Home")'">Back</button>
-        <button type="submit" onclick="drinkResponsibly()">Create Drink</button>
-    </div>
-</form>
-</div>
+        </section>
+        <section class="button">
+            <button type="button" onclick="window.location='@Url.Action("Index", "Home")'">Back</button>
+            <button type="submit" onclick="drinkResponsibly()">Create Drink</button>
+        </section>
+    </form>
+</article>
 <script>
     const shotCosts = {
         None: 0,
@@ -52,22 +39,30 @@
         Gin: 20,
         Wine: 30,
         Sake: 40,
-        Whiskey: 50
+        Whiskey:40
     };
 
+    function InitProductList() {
+        var items = @Html.Raw(Json.Encode(Model.productList));
+        console.log(items)
+    }
+    InitProductList()
     function updateLayers(count) {
         const container = document.getElementById('layersContainer');
         container.innerHTML = '';
+
+
+        var items = @Html.Raw(Json.Encode(Model.productList));
+        let productListHTML = '';
+        items.forEach(function (p) {
+            productListHTML += `<p>${p.Product_Name}</p>`;
+        });
 
         for (let i = 0; i < count; i++) {
             const layerDiv = document.createElement('div');
             layerDiv.innerHTML =
                 `<label>Layer ${i + 1}</label>
-            <select name="Layers[${i}].Shot">
-                ${Object.entries(shotCosts).map(([key, value]) =>
-                    `<option value="${key}">${key} - ${value}</option>`
-                ).join('')}
-            </select>
+            ${productListHTML}
             <input type="number" name="Layers[${i}].Percentage" placeholder="Quantity" value="1" min="0" max="100" onchange="validatePercentages()" />
             <button type="button" onclick="addValue(${i}, 10)">+10</button>
             <button type="button" onclick="addValue(${i}, 1)">+1</button>
