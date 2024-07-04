@@ -133,6 +133,11 @@
                 gap: 2vw
             }
 
+            article form #layersContainer div label {
+                font-size: large;
+                margin: 1vh 1vw;
+            }
+
             article form #layersContainer div .layerOption .div {
                 border: solid, 1px;
                 border-radius: 1vw;
@@ -143,6 +148,26 @@
                 padding: 3vh;
                 cursor: pointer;
                 gap: 2vh
+            }
+
+            article form #layersContainer div .layerOption label input {
+                opacity: 0;
+                height: 0;
+                width: 0;
+            }
+
+            article form #layersContainer div .layerOption label:has(input[type=radio]:checked) {
+                border: solid, 2px, rgba(0, 48, 73);
+                background-color: rgba(0, 48, 73);
+                color: white;
+                fill: white;
+            }
+
+            article form #layersContainer div .layerOption label:hover {
+                border: solid, 2px, rgba(0, 48, 73);
+                background-color: rgba(0, 48, 73);
+                color: white;
+                fill: white;
             }
 </style>
 <article>
@@ -216,6 +241,7 @@
         items.forEach(function (p) {
             productListHTML +=
             `<label class="div transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover" id="parent">
+             <img src="/ProductAssets/${p.imageUrlString}">
              <input type="radio" name="radiogroup"/>${p.Product_Name}
              </label>`;
         });
@@ -223,7 +249,7 @@
         for (let i = 0; i < count; i++) {
             const layerDiv = document.createElement('div');
             layerDiv.innerHTML =
-                `<label>Layer ${i + 1}</label>
+           `<label>Layer ${i + 1}</label>
             <div class = "layerOption">
             ${productListHTML}
             </div>
