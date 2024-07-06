@@ -126,18 +126,32 @@
                     width: 0;
                 }
 
+            article form .layer h2 {
+                margin: 3vh 0;
+            }
+
             article form #layersContainer div .layerOption {
                 list-style: none;
                 display: flex;
                 padding: 0px;
-                gap: 2vw
+                gap: 2vw;
+                grid-area: layerOption;
             }
 
-            article form #layersContainer div label {
+
+            article form #layersContainer .layerShots {
+                display: grid;
+                grid-template-rows: auto auto;
+                grid-template-columns: auto auto;
+                grid-template-areas:
+                    "Title Title"
+                    "layerOption numOfShots";
+            }
+            article form #layersContainer div .LayerNum {
                 font-size: large;
                 margin: 1vh 1vw;
+                grid-area: Title;
             }
-
             article form #layersContainer div .layerOption .div {
                 border: solid, 1px;
                 border-radius: 1vw;
@@ -147,13 +161,18 @@
                 height: 40vh;
                 padding: 3vh;
                 cursor: pointer;
-                gap: 2vh
+                gap: 2vh;
+                
             }
 
             article form #layersContainer div .layerOption label input {
                 opacity: 0;
                 height: 0;
                 width: 0;
+            }
+
+            article form #layersContainer div .layerOption label img {
+                height: 25vh;
             }
 
             article form #layersContainer div .layerOption label:has(input[type=radio]:checked) {
@@ -169,6 +188,35 @@
                 color: white;
                 fill: white;
             }
+            article form #layersContainer .layerShots .NumShots {
+                grid-area: numOfShots;
+                place-self: center;
+            }
+                article form #layersContainer .layerShots .NumShots input {
+                    margin: 1vh 0vw;
+                    text-align: center;
+                    border-radius: 1vw;
+                    width: 100%;
+                    height: 10vh;
+                    overflow: hidden;
+                    border: solid 1px rgba(0, 48, 73);
+                }
+                article form #layersContainer .layerShots .NumShots p {
+                    margin: 0;
+                }
+                article form #layersContainer .layerShots .NumShots .buttons button {
+                    border: 1px solid rgba(0, 48, 73);
+                    border-radius: 50%;
+                    width: 5vw;
+                    height: 10vh;
+                    background-color: #0000;
+                }
+                    article form #layersContainer .layerShots .NumShots .buttons button:hover {
+                        border: solid, 2px, rgba(0, 48, 73);
+                        background-color: rgba(0, 48, 73);
+                        color: white;
+                        fill: white;
+                    }
 </style>
 <article>
     <section class="header">
@@ -208,7 +256,9 @@
             </div>
 
         </section>
-        <section id="layersContainer">
+        <section class="layer">
+            <h2 id="TitleText" style="display:none">Shot Customization</h2>
+            <section id="layersContainer"></section>
         </section>
         <section class="button">
             <button type="button" onclick="window.location='@Url.Action("Index", "Home")'">Back</button>
@@ -232,9 +282,14 @@
     }
     InitProductList()
     function updateLayers(count) {
+        const title = document.getElementById('TitleText');
         const container = document.getElementById('layersContainer');
         container.innerHTML = '';
 
+        if (title.style.display === "none") {
+            title.style.display = "block";
+            console.log("state")
+        }
 
         var items = @Html.Raw(Json.Encode(Model.productList));
         let productListHTML = '';
@@ -248,18 +303,26 @@
 
         for (let i = 0; i < count; i++) {
             const layerDiv = document.createElement('div');
+            layerDiv.classList.add("layerShots")
             layerDiv.innerHTML =
-           `<label>Layer ${i + 1}</label>
+           `<label class="LayerNum">Layer ${i + 1}</label>
             <div class = "layerOption">
             ${productListHTML}
             </div>
-            <input type="number" name="Layers[${i}].Percentage" placeholder="Quantity" value="1" min="0" max="100" onchange="validatePercentages()" />
-            <button type="button" onclick="addValue(${i}, 10)">+10</button>
-            <button type="button" onclick="addValue(${i}, 1)">+1</button>
-            <button type="button" onclick="subtractValue(${i}, 1)">-1</button>
-            <button type="button" onclick="subtractValue(${i}, 10)">-10</button>
+            <div class="NumShots">
+            <p>Shot Percentage</p>
+            <input type="number" name="Layers[${i}].Percentage" placeholder="Quantity" value="1" min="0" max="100" onchange="validatePercentages()" readonly/>
+            <div class="buttons">
+             <button class="transition ease-in-out delay-150 -translate-y-px-hover duration-300"type="button" onclick="addValue(${i}, 10)">+10</button>
+             <button class="transition ease-in-out delay-150 -translate-y-px-hover duration-300"type="button" onclick="addValue(${i}, 1)">+1</button>
+             <button class="transition ease-in-out delay-150 -translate-y-px-hover duration-300"type="button" onclick="subtractValue(${i}, 1)">-1</button>
+             <button class="transition ease-in-out delay-150 -translate-y-px-hover duration-300"type="button" onclick="subtractValue(${i}, 10)">-10</button>
+            </div>
+            </div>
+
         `;
             container.appendChild(layerDiv);
+
         }
     }
 
@@ -306,6 +369,9 @@
             alert('The total percentage exceeds 100%. Please adjust the values before submitting.');
         }
     });
+
+    //arraylist of current drink
+    let CurrentDrink = [];
 
     function drinkResponsibly() {
         alert("Please remember that we can't be held responsible for the effects of mixing our alcohol beverages with other substances. Your safety matters to us, so please consume responsibly and be mindful of the choices you make. Cheers, and stay safe!");
