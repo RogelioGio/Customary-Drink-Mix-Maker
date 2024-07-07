@@ -165,17 +165,13 @@
                 
             }
 
-            article form #layersContainer div .layerOption label input {
-                opacity: 0;
-                height: 0;
-                width: 0;
-            }
+
 
             article form #layersContainer div .layerOption label img {
                 height: 25vh;
             }
 
-            article form #layersContainer div .layerOption label:has(input[type=radio]:checked) {
+            article form #layersContainer  .layerOption label:has(input[type=radio]:checked) {
                 border: solid, 2px, rgba(0, 48, 73);
                 background-color: rgba(0, 48, 73);
                 color: white;
@@ -227,7 +223,7 @@
         <section class="Base">
             <h2>Choose your base of your drink</h2>
             <ul>
-                @foreach (var Base in Model.productList)
+                @foreach (var Base in Model.Base)
                 {
                     <li>
                         <label class="div transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover" id="parent">
@@ -277,7 +273,9 @@
     };
 
     function InitProductList() {
-        var items = @Html.Raw(Json.Encode(Model.productList));
+        var items = @Html.Raw(Json.Encode(Model.Base));
+        var items2 =  @Html.Raw(Json.Encode(Model.Shot));
+        console.log(items2);
         console.log(items)
     }
     InitProductList()
@@ -291,17 +289,20 @@
             console.log("state")
         }
 
-        var items = @Html.Raw(Json.Encode(Model.productList));
-        let productListHTML = '';
-        items.forEach(function (p) {
-            productListHTML +=
-            `<label class="div transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover" id="parent">
-             <img src="/ProductAssets/${p.imageUrlString}">
-             <input type="radio" name="radiogroup"/>${p.Product_Name}
-             </label>`;
-        });
+        var items = @Html.Raw(Json.Encode(Model.Shot));
+
 
         for (let i = 0; i < count; i++) {
+            let productListHTML = '';
+            items.forEach(function (p) {
+                productListHTML +=
+                    `<label class="div transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover" id="parent">
+                    <img src="/ProductAssets/${p.imageUrlString}">
+                    <input type="radio" name="Layers[${i}].Shot" value="${p.Product_Name}"/>${p.Product_Name}
+                    </label>`;
+            });
+
+
             const layerDiv = document.createElement('div');
             layerDiv.classList.add("layerShots")
             layerDiv.innerHTML =

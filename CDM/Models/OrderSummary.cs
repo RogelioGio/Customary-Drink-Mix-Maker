@@ -36,7 +36,8 @@ namespace CDM.Models
 
     //cutomaryDrinks model
     public class CustomDrinkModel {
-        public List<ProductTB> productList { get; set; }
+        public List<ProductTB> Base { get; set; }
+        public List<ProductTB> Shot { get; set; }
     }
     
 }

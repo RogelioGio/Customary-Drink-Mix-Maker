@@ -16,14 +16,6 @@ namespace CDM.Models
         public List<string> Layer { get; set; } = new List<string>();
         public float TotalCost { get; set; }
 
-        public static Dictionary<string, float> ShotCosts = new Dictionary<string, float>
-    {
-        { "Beer", 10 },
-        { "Gin", 20 },
-        { "Wine", 30 },
-        { "Sake", 40 },
-        { "Whiskey", 50 }
-    };
 
         public override string ToString()
         {
