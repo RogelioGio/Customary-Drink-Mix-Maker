@@ -219,7 +219,21 @@
                         color: white;
                         fill: white;
                     }
+
+    aside {
+        width: 20%;
+        height: 100vh;
+        float: right;
+        background-color: black;
+        color: white;
+    }
 </style>
+<aside>
+    <section>
+        <ul class="CurrentDrink">
+        </ul>
+    </section>
+</aside>
 <article>
     <section class="header">
         <img src="~/Preview.png">
@@ -294,7 +308,7 @@
 
         var items = @Html.Raw(Json.Encode(Model.Shot));
 
-        
+
         if (CurrentDrink[0] == null) {
             alert("Choose an Base First");
             checkbox.checked = false;
@@ -386,6 +400,9 @@
 
     //arraylist of current drink
     let CurrentDrink = [];
+    let currentdrinks = document.querySelector('.CurrentDrink')
+    currentdrinks.innerHTML = '';
+
     function currentDrink(checkbox, base) {
         if (checkbox.checked) {
             if (CurrentDrink.length === 0) {
@@ -399,20 +416,56 @@
             }
         }
         console.log(CurrentDrink);
+        Object.keys(CurrentDrink).forEach(id => {
+            let value = CurrentDrink[id];
+            let newitem = document.createElement('li');
+            newitem.classList.add('item')
+            newitem.innerHTML = `<p>Base Drink: ${value.BaseDrink}<p>`;
+            currentdrinks.appendChild(newitem)
+        })
     }
+
+    
     function currentDrink_LayerCount(count) {
+        let item = document.querySelector('.item')
         let drink = CurrentDrink.length - 1;
         var Layer = new Array(count);
 
         CurrentDrink[drink].LayerCount = count;
         CurrentDrink[drink].Layer = Layer
+
         console.log(CurrentDrink[CurrentDrink.length - 1])
+
+        Object.keys(CurrentDrink).forEach(id => {
+            let value = CurrentDrink[id];
+
+            var entry = `
+                <p>Layer Count: ${value.LayerCount}</p>
+                <ul id="shot"></ul>`
+            item.innerHTML += entry;
+        })
+        
     }
-  
+
     function currentDrink_Layer(num, shot) {
+        let item = document.querySelector('.item')
         var layernum = "Layer " + (num+1);
-        CurrentDrink[CurrentDrink.length-1].Layer[layernum] = shot;
-        console.log(CurrentDrink[CurrentDrink.length - 1])
+        CurrentDrink[CurrentDrink.length - 1].Layer[layernum] = shot;
+        ReloadLayers()
+    }
+
+
+    function ReloadLayers() {
+        let shotlist = document.getElementById('shot')
+        Object.keys(CurrentDrink[CurrentDrink.length - 1].Layer).forEach(id => {
+            let value = CurrentDrink[CurrentDrink.length - 1].Layer[id]
+            console.log("test")
+            var layernum = id
+            let shots = document.createElement('li')
+
+            shots.innerHTML = `<p>${id}: ${value}</p>`
+            shotlist.appendChild(shots)
+        })
     }
 
     function drinkResponsibly() {
