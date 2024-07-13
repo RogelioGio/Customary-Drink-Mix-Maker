@@ -9,7 +9,6 @@
         font-optical-sizing: auto;
         font-weight: 400;
         font-style: normal;
-        overflow: hidden;
     }
 
     article {
@@ -222,11 +221,18 @@
 
     aside {
         width: 20%;
-        height: 100vh;
-        float: right;
         background-color: black;
         color: white;
+        position: sticky;
+        float: right;
+        right: 3dvw;
+        top: 9dvh;
+        border-radius: 5vh
     }
+        aside section .CurrentDrink {
+            padding: 30px;
+            margin: 0;
+        }
 </style>
 <aside>
     <section>
@@ -316,7 +322,6 @@
             currentDrink_LayerCount(count);
             if (title.style.display === "none") {
                 title.style.display = "block";
-                console.log("state")
             }
             for (let i = 0; i < count; i++) {
                 let productListHTML = '';
@@ -407,64 +412,96 @@
         if (checkbox.checked) {
             if (CurrentDrink.length === 0) {
                 CurrentDrink[0] = {
-                    BaseDrink: base
+                    BaseDrink: base,
+                    LayerCount: null
                 };
+
+                Object.keys(CurrentDrink).forEach(id => {
+                    let value = CurrentDrink[id];
+                    let newitem = document.createElement('li');
+                    newitem.classList.add('item')
+                    newitem.innerHTML = `<p id="Base">Base Drink: ${value.BaseDrink}</p>`;
+                    currentdrinks.appendChild(newitem)
+                })
             }else{
-                CurrentDrink[0] = {
-                    BaseDrink: base
-                };
+                CurrentDrink[CurrentDrink.length - 1].BaseDrink = base;
+
+                Object.keys(CurrentDrink).forEach(id => {
+                    let value = CurrentDrink[id]
+                    let Base = document.getElementById('Base');
+                    Base.innerHTML = `Base Drink: ${value.BaseDrink}`;
+                });
             }
         }
-        console.log(CurrentDrink);
-        Object.keys(CurrentDrink).forEach(id => {
-            let value = CurrentDrink[id];
-            let newitem = document.createElement('li');
-            newitem.classList.add('item')
-            newitem.innerHTML = `<p>Base Drink: ${value.BaseDrink}<p>`;
-            currentdrinks.appendChild(newitem)
-        })
+        
     }
 
     
     function currentDrink_LayerCount(count) {
         let item = document.querySelector('.item')
         let drink = CurrentDrink.length - 1;
-        var Layer = new Array(count);
+        var Layer = new Array();
+        let LayerSize;
 
-        CurrentDrink[drink].LayerCount = count;
-        CurrentDrink[drink].Layer = Layer
 
-        console.log(CurrentDrink[CurrentDrink.length - 1])
+        if (CurrentDrink[drink].LayerCount == null) {
+            CurrentDrink[drink].LayerCount = count;
+            CurrentDrink[drink].Layer = Layer
+            if (CurrentDrink[drink].LayerCount == 3) {
+                LayerSize = `<p id="Size">Drink Size: Small</p>`;
+            }
+            else if (CurrentDrink[drink].LayerCount <= 4) {
+                LayerSize = `<p id="Size">Drink Size: Medium</p>`;
+            }
+            else {
+                LayerSize = `<p id="Size">Drink Size: Large</p>`;
+            }
 
-        Object.keys(CurrentDrink).forEach(id => {
-            let value = CurrentDrink[id];
+            item.innerHTML += LayerSize;
+        } else {
+            let size = document.getElementById('Size');
+            CurrentDrink[drink].LayerCount = count;
+            CurrentDrink[drink].Layer = Layer
 
-            var entry = `
-                <p>Layer Count: ${value.LayerCount}</p>
-                <ul id="shot"></ul>`
-            item.innerHTML += entry;
-        })
-        
+            if (CurrentDrink[drink].LayerCount == 3) {
+                size.innerHTML = `Drink Size: Small`;
+            }
+            else if (CurrentDrink[drink].LayerCount <= 4) {
+                size.innerHTML = `Drink Size: Medium`;
+            }
+            else {
+                size.innerHTML = `Drink Size: Large`;
+            }
+        }
+
+        let shotlist = document.createElement('ul')
+        shotlist.id = 'shotlist';
+        item.appendChild(shotlist)
     }
 
     function currentDrink_Layer(num, shot) {
-        let item = document.querySelector('.item')
-        var layernum = "Layer " + (num+1);
-        CurrentDrink[CurrentDrink.length - 1].Layer[layernum] = shot;
+        var layernum = num;
+        if (CurrentDrink[CurrentDrink.length - 1].Layer[layernum] == null) {
+            CurrentDrink[CurrentDrink.length - 1].Layer[layernum] = {
+                Layer: shot
+            }
+        } else {
+            CurrentDrink[CurrentDrink.length - 1].Layer[layernum].Layer = shot
+        }
+        console.log(CurrentDrink[CurrentDrink.length - 1].Layer)
         ReloadLayers()
     }
 
 
     function ReloadLayers() {
-        let shotlist = document.getElementById('shot')
-        Object.keys(CurrentDrink[CurrentDrink.length - 1].Layer).forEach(id => {
-            let value = CurrentDrink[CurrentDrink.length - 1].Layer[id]
-            console.log("test")
-            var layernum = id
-            let shots = document.createElement('li')
+        let shotlist = document.getElementById('shotlist')
+        shotlist.innerHTML = '';
+        Object.keys(CurrentDrink[CurrentDrink.length - 1].Layer).forEach(num => {
+            let value = CurrentDrink[CurrentDrink.length - 1].Layer[num];
 
-            shots.innerHTML = `<p>${id}: ${value}</p>`
-            shotlist.appendChild(shots)
+            let newItem = document.createElement('li')
+            newItem.innerHTML = `<p>Layer ${parseInt(num)+1}: ${value.Layer}</p>`
+            shotlist.appendChild(newItem)
         })
     }
 
