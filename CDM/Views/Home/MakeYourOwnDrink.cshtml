@@ -1,50 +1,343 @@
-﻿@{
+﻿@model CDM.Models.CustomDrinkModel
+@{
     ViewBag.Title = "Make Your Own Drink";
 }
-
+<link href="https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css" rel="stylesheet" integrity="sha256-V6lu+OdYNKTKTsVFBuQsyIlDiRWiOmtC8VQ8Lzdm2i4=" crossorigin="anonymous">
 <style>
-    .center {
-        margin: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border: solid, 1px;
-        border-radius: 15px;
-        padding: 100px;
+    main {
+        font-family: "Jost", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 400;
+        font-style: normal;
     }
+
+    article {
+        padding: 2vw;
+        overflow: hidden;
+    }
+
+        article .header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+            article .header img {
+                height: 20vh;
+            }
+
+            article .header h1 {
+                margin-left: 2vw;
+            }
+
+        article form {
+            padding: 0 3vw;
+        }
+
+            article form .Base h2 {
+                margin: 3vh 0;
+            }
+
+            article form .Base ul {
+                list-style: none;
+                display: flex;
+                padding: 0px;
+                gap: 2vw
+            }
+
+                article form .Base ul li .div {
+                    border: solid, 1px;
+                    border-radius: 1vw;
+                    display: flex;
+                    flex-direction: column;
+                    width: 15vw;
+                    height: 40vh;
+                    padding: 3vh;
+                    cursor: pointer;
+                    gap: 2vh
+                }
+
+                    article form .Base ul li .div:hover {
+                        border: solid, 2px, rgba(0, 48, 73);
+                        background-color: rgba(0, 48, 73);
+                        color: white;
+                    }
+
+                    article form .Base ul li .div #id {
+                        opacity: 0;
+                        height: 0;
+                        width: 0;
+                    }
+
+                    article form .Base ul li .div img {
+                        height: 25vh;
+                    }
+
+                    article form .Base ul li .div:has(input[type=radio]:checked) {
+                        border: solid, 2px, rgba(0, 48, 73);
+                        background-color: rgba(0, 48, 73);
+                        color: white;
+                    }
+
+            article form .DrinkSize h2 {
+                margin: 3vh 0;
+            }
+
+            article form .DrinkSize label {
+                border: solid, 1px;
+                border-radius: 1vw;
+                align-items: center;
+                display: flex;
+                width: 15vw;
+                padding: 3vh;
+                cursor: pointer;
+                font-size: large;
+            }
+
+            article form .DrinkSize .sizeOption {
+                display: flex;
+                gap: 2vw;
+            }
+
+                article form .DrinkSize .sizeOption label:hover {
+                    border: solid, 2px, rgba(0, 48, 73);
+                    background-color: rgba(0, 48, 73);
+                    color: white;
+                    fill: white;
+                }
+
+                article form .DrinkSize .sizeOption label:has(input[type=radio]:checked) {
+                    border: solid, 2px, rgba(0, 48, 73);
+                    background-color: rgba(0, 48, 73);
+                    color: white;
+                    fill: white;
+                }
+
+
+                article form .DrinkSize .sizeOption .icon {
+                    width: 4vw;
+                    height: 100%;
+                }
+
+                article form .DrinkSize .sizeOption label input {
+                    opacity: 0;
+                    height: 0;
+                    width: 0;
+                }
+
+            article form .layer h2 {
+                margin: 3vh 0;
+            }
+
+            article form #layersContainer div .layerOption {
+                list-style: none;
+                display: flex;
+                padding: 0px;
+                gap: 2vw;
+                grid-area: layerOption;
+            }
+
+
+            article form #layersContainer .layerShots {
+                display: grid;
+                grid-template-rows: auto auto;
+                grid-template-columns: auto auto;
+                grid-template-areas:
+                    "Title Title"
+                    "layerOption numOfShots";
+            }
+
+            article form #layersContainer div .LayerNum {
+                font-size: large;
+                margin: 1vh 1vw;
+                grid-area: Title;
+            }
+
+            article form #layersContainer div .layerOption .div {
+                border: solid, 1px;
+                border-radius: 1vw;
+                display: flex;
+                flex-direction: column;
+                width: 15vw;
+                height: 40vh;
+                padding: 3vh;
+                cursor: pointer;
+                gap: 2vh;
+            }
+
+
+
+            article form #layersContainer div .layerOption label img {
+                height: 25vh;
+            }
+
+            article form #layersContainer .layerOption label:has(input[type=radio]:checked) {
+                border: solid, 2px, rgba(0, 48, 73);
+                background-color: rgba(0, 48, 73);
+                color: white;
+                fill: white;
+            }
+
+            article form #layersContainer div .layerOption label:hover {
+                border: solid, 2px, rgba(0, 48, 73);
+                background-color: rgba(0, 48, 73);
+                color: white;
+                fill: white;
+            }
+
+            article form #layersContainer .layerShots .NumShots {
+                grid-area: numOfShots;
+                place-self: center;
+            }
+
+                article form #layersContainer .layerShots .NumShots input {
+                    margin: 1vh 0vw;
+                    text-align: center;
+                    border-radius: 1vw;
+                    width: 100%;
+                    height: 10vh;
+                    overflow: hidden;
+                    border: solid 1px rgba(0, 48, 73);
+                }
+
+                article form #layersContainer .layerShots .NumShots p {
+                    margin: 0;
+                }
+
+                article form #layersContainer .layerShots .NumShots .buttons button {
+                    border: 1px solid rgba(0, 48, 73);
+                    border-radius: 50%;
+                    width: 5vw;
+                    height: 10vh;
+                    background-color: #0000;
+                }
+
+                    article form #layersContainer .layerShots .NumShots .buttons button:hover {
+                        border: solid, 2px, rgba(0, 48, 73);
+                        background-color: rgba(0, 48, 73);
+                        color: white;
+                        fill: white;
+                    }
+
+            article form .button {
+                width: 100%;
+                height: 15vh;
+                padding: 3vh 2vw;
+                display: flex;
+                flex-direction: row;
+                gap: 3vw;
+            }
+
+                article form .button button {
+                    width: 100%;
+                    font-size: large;
+                    border-radius: 1vw;
+                    border: solid 1px rgba(0, 48, 73);
+                    background-color: white;
+                    color: rgba(0, 48, 73);
+                }
+
+                    article form .button button:hover {
+                        border: solid, 2px, rgba(0, 48, 73);
+                        background-color: rgba(0, 48, 73);
+                        color: white;
+                        fill: white;
+                    }
+
+    aside {
+        background-color: black;
+        color: white;
+        position: sticky;
+        float: right;
+        right: 3dvw;
+        top: 5dvh;
+        border-radius: 5vh;
+        padding: 2dvw;
+    }
+
+        aside .header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            fill: white;
+        }
+
+            aside .header box-icon {
+                width: 3vw;
+                height: 5vh;
+            }
+
+            aside .header h2 {
+                margin: 0;
+                padding: 1vw;
+            }
+
+        aside section .CurrentDrink {
+            padding: 1vw;
+            list-style: none;
+            margin: 0;
+        }
+
+        aside section p {
+            margin: 0;
+        }
 </style>
+<aside>
+    <section class="header">
+        <box-icon type='solid' name='drink'></box-icon>
+        <h2>Current Drink Mix</h2>
+    </section>
+    <section id="DrinkList">
+    </section>
+</aside>
+<article>
+    <section class="header">
+        <img src="~/Preview.png">
+        <h1>Create Your Drink</h1>
+    </section>
+    <form id="drinkForm" method="post" action="/Home/MakeYourOwnDrink">
+        <section class="Base">
+            <h2>Choose your base of your drink</h2>
+            <ul>
+                @foreach (var Base in Model.Base)
+                {
+                    <li>
+                        <label class="div transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover" id="parent">
+                            <img src="~/ProductAssets/@Base.imageUrlString">
+                            <input type="radio" name="BaseDrink" value="@Base.Product_Name" id="id" onchange="currentDrink(this, '@Base.Product_Name')" /> @Base.Product_Name (₱@Base.Product_Price)
+                        </label>
+                    </li>
+                }
+            </ul>
+        </section>
+        <section class="DrinkSize">
+            <h2>Size of your drink</h2>
+            <div class="sizeOption">
+                <label class="transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover">
+                    <box-icon name='signal-1' class="icon"></box-icon>
+                    <input type="radio" id="SizeSmall" name="Size" value="Small" onchange="updateLayers(this, 3)" /> Small<br>(8oz)
+                </label>
+                <label class="transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover">
+                    <box-icon name='signal-2' class="icon"></box-icon>
+                    <input type="radio" id="SizeMedium" name="Size" value="Medium" onchange="updateLayers(this, 4)" /> Medium<br>(16oz)
+                </label>
+                <label class="transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover">
+                    <box-icon name='signal-3' class="icon"></box-icon>
+                    <input type="radio" id="SizeLarge" name="Size" value="Large" onchange="updateLayers(this, 5)" /> Large<br>(22oz)
+                </label>
+            </div>
 
-<div class="center">
-<h2>Make Your Own Drink</h2>
-
-<form id="drinkForm" method="post" action="/Home/MakeYourOwnDrink">
-    <div>
-        <label for="BaseDrink">Base drink</label>
-        <select id="BaseDrink" name="BaseDrink">
-            <option value="Beer">Beer - 35</option>
-            <option value="Gin">Gin - 75</option>
-            <option value="Wine">Wine - 115</option>
-            <option value="Sake">Sake - 150</option>
-            <option value="Whiskey">Whiskey - 185</option>
-        </select>
-    </div>
-    <div>
-        <label>Size</label><br />
-        <input type="radio" id="SizeSmall" name="Size" value="Small" onchange="updateLayers(3)" /> Small - (8oz)
-        <input type="radio" id="SizeMedium" name="Size" value="Medium" onchange="updateLayers(4)" /> Medium - (16oz)
-        <input type="radio" id="SizeLarge" name="Size" value="Large" onchange="updateLayers(5)" /> Large - (22oz)
-    </div>
-    <div id="layersContainer"></div>
-
-    <div>
-        
-
-        <button type="button" onclick="window.location='@Url.Action("Index", "Home")'">Back</button>
-        <button type="submit" onclick="drinkResponsibly()">Create Drink</button>
-    </div>
-</form>
-</div>
+        </section>
+        <section class="layer">
+            <h2 id="TitleText" style="display:none">Shot Customization</h2>
+            <section id="layersContainer"></section>
+        </section>
+        <section class="button">
+            <button type="button" class="btn btn-primary transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-105-hover" onclick="window.location='@Url.Action("Index", "Home")'">Back</button>
+            <button type="submit" class="btn btn-primary transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-105-hover" onclick="drinkResponsibly()">Create Drink</button>
+        </section>
+    </form>
+</article>
 <script>
     const shotCosts = {
         None: 0,
@@ -52,29 +345,67 @@
         Gin: 20,
         Wine: 30,
         Sake: 40,
-        Whiskey: 50
+        Whiskey:40
     };
 
-    function updateLayers(count) {
+    function InitProductList() {
+        var items = @Html.Raw(Json.Encode(Model.Base));
+        var items2 =  @Html.Raw(Json.Encode(Model.Shot));
+        console.log(items2);
+        console.log(items)
+    }
+    InitProductList()
+
+
+    function updateLayers(checkbox, count) {
+        const title = document.getElementById('TitleText');
         const container = document.getElementById('layersContainer');
         container.innerHTML = '';
 
-        for (let i = 0; i < count; i++) {
-            const layerDiv = document.createElement('div');
-            layerDiv.innerHTML =
-                `<label>Layer ${i + 1}</label>
-            <select name="Layers[${i}].Shot">
-                ${Object.entries(shotCosts).map(([key, value]) =>
-                    `<option value="${key}">${key} - ${value}</option>`
-                ).join('')}
-            </select>
-            <input type="number" name="Layers[${i}].Percentage" placeholder="Quantity" value="1" min="0" max="100" onchange="validatePercentages()" />
-            <button type="button" onclick="addValue(${i}, 10)">+10</button>
-            <button type="button" onclick="addValue(${i}, 1)">+1</button>
-            <button type="button" onclick="subtractValue(${i}, 1)">-1</button>
-            <button type="button" onclick="subtractValue(${i}, 10)">-10</button>
+        var items = @Html.Raw(Json.Encode(Model.Shot));
+
+
+        if (CurrentDrink[0] == null) {
+            alert("Choose an Base First");
+            checkbox.checked = false;
+        } else {
+            currentDrink_LayerCount(count);
+            if (title.style.display === "none") {
+                title.style.display = "block";
+            }
+            for (let i = 0; i < count; i++) {
+                let productListHTML = '';
+                items.forEach(function (p) {
+                    productListHTML +=
+                        `<label class="div transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover" id="parent">
+                    <img src="/ProductAssets/${p.imageUrlString}">
+                    <input type="radio" name="Layers[${i}].Shot" value="${p.Product_Name}" onchange="currentDrink_Layer(${i}, '${p.Product_Name}')"/>${p.Product_Name}
+                    </label>`;
+                });
+
+
+                const layerDiv = document.createElement('div');
+                layerDiv.classList.add("layerShots")
+                layerDiv.innerHTML =
+                    `<label class="LayerNum">Layer ${i + 1}</label>
+            <div class = "layerOption">
+            ${productListHTML}
+            </div>
+            <div class="NumShots">
+            <p>Shot Percentage</p>
+            <input type="number" name="Layers[${i}].Percentage" placeholder="Quantity" value="1" min="0" max="100" onchange="validatePercentages()" readonly/>
+            <div class="buttons">
+             <button class="transition ease-in-out delay-150 -translate-y-px-hover duration-300"type="button" onclick="addValue(${i}, 10)">+10</button>
+             <button class="transition ease-in-out delay-150 -translate-y-px-hover duration-300"type="button" onclick="addValue(${i}, 1)">+1</button>
+             <button class="transition ease-in-out delay-150 -translate-y-px-hover duration-300"type="button" onclick="subtractValue(${i}, 1)">-1</button>
+             <button class="transition ease-in-out delay-150 -translate-y-px-hover duration-300"type="button" onclick="subtractValue(${i}, 10)">-10</button>
+            </div>
+            </div>
+
         `;
-            container.appendChild(layerDiv);
+                container.appendChild(layerDiv);
+
+            }
         }
     }
 
@@ -82,6 +413,7 @@
         const input = document.querySelector(`input[name="Layers[${index}].Percentage"]`);
         input.value = parseInt(input.value || 0, 10) + valueToAdd;
         validatePercentages();
+        currentDrink_LayerShotPercentage(index, input.value)
     }
 
     function subtractValue(index, valueToSubtract) {
@@ -122,7 +454,133 @@
         }
     });
 
+    //arraylist of current drink
+    let CurrentDrink = [];
+    const drinklist = document.getElementById('DrinkList')
+
+    function currentDrink(checkbox, base) {
+        if (checkbox.checked || drinklist.innerHTML.trim() === '') {
+
+            let list = drinklist.querySelector('ul');
+            if (!list) {
+                list = document.createElement('ul');
+                list.classList.add('CurrentDrink');
+                drinklist.appendChild(list);
+            }
+
+            let currentdrinks = document.querySelector('.CurrentDrink')
+            if (CurrentDrink.length === 0) {
+
+                CurrentDrink[0] = {
+                    BaseDrink: base,
+                    LayerCount: null
+                };
+
+                Object.keys(CurrentDrink).forEach(id => {
+                    let value = CurrentDrink[id];
+                    let newitem = document.createElement('li');
+                    newitem.classList.add('item')
+                    newitem.innerHTML = `<p id="Base">Base Drink: ${value.BaseDrink}</p>`;
+                    currentdrinks.appendChild(newitem)
+                })
+            } else {
+                CurrentDrink[CurrentDrink.length - 1].BaseDrink = base;
+
+                Object.keys(CurrentDrink).forEach(id => {
+                    let value = CurrentDrink[id]
+                    let Base = document.getElementById('Base');
+                    Base.innerHTML = `Base Drink: ${value.BaseDrink}`;
+                });
+            }
+        } else {
+            return
+        }
+
+    }
+
+
+    function currentDrink_LayerCount(count) {
+        let item = document.querySelector('.item')
+        let drink = CurrentDrink.length - 1;
+        var Layer = new Array();
+        let LayerSize;
+
+
+        if (CurrentDrink[drink].LayerCount == null) {
+            CurrentDrink[drink].LayerCount = count;
+            CurrentDrink[drink].Layer = Layer
+            if (CurrentDrink[drink].LayerCount == 3) {
+                LayerSize = `<p id="Size">Drink Size: Small</p>`;
+            }
+            else if (CurrentDrink[drink].LayerCount <= 4) {
+                LayerSize = `<p id="Size">Drink Size: Medium</p>`;
+            }
+            else {
+                LayerSize = `<p id="Size">Drink Size: Large</p>`;
+            }
+
+            item.innerHTML += LayerSize;
+        } else {
+            let size = document.getElementById('Size');
+            CurrentDrink[drink].LayerCount = count;
+            CurrentDrink[drink].Layer = Layer
+
+            if (CurrentDrink[drink].LayerCount == 3) {
+                size.innerHTML = `Drink Size: Small`;
+            }
+            else if (CurrentDrink[drink].LayerCount <= 4) {
+                size.innerHTML = `Drink Size: Medium`;
+            }
+            else {
+                size.innerHTML = `Drink Size: Large`;
+            }
+        }
+        const shotlist = document.querySelector('#shotlist')
+        if (!shotlist) {
+            let shotlist = document.createElement('ul')
+            shotlist.id = 'shotlist';
+            item.appendChild(shotlist)
+        }
+
+    }
+
+    function currentDrink_Layer(num, shot) {
+        const input = document.querySelector(`input[name="Layers[${num}].Percentage"]`);
+        if (CurrentDrink[CurrentDrink.length - 1].Layer[num] == null) {
+            CurrentDrink[CurrentDrink.length - 1].Layer[num] = {
+                Layer: shot,
+                Percent: input.value
+            }
+        } else {
+            CurrentDrink[CurrentDrink.length - 1].Layer[num].Layer = shot
+        }
+        console.log(CurrentDrink[CurrentDrink.length - 1].Layer)
+        ReloadLayers()
+    }
+
+    function currentDrink_LayerShotPercentage(num, shotpercent) {
+        CurrentDrink[CurrentDrink.length - 1].Layer[num].Percent = shotpercent
+        console.log(CurrentDrink[CurrentDrink.length - 1].Layer)
+        ReloadLayers()
+    }
+
+    function ReloadLayers() {
+        let shotlist = document.getElementById('shotlist')
+        shotlist.innerHTML = '';
+        Object.keys(CurrentDrink[CurrentDrink.length - 1].Layer).forEach(num => {
+            let value = CurrentDrink[CurrentDrink.length - 1].Layer[num];
+
+            let newItem = document.createElement('li')
+            newItem.innerHTML =
+                `<p>Layer ${parseInt(num) + 1}: ${value.Layer}</p>
+                 <p>Percentage: ${value.Percent}%</p>`
+            shotlist.appendChild(newItem)
+        })
+    }
+
     function drinkResponsibly() {
         alert("Please remember that we can't be held responsible for the effects of mixing our alcohol beverages with other substances. Your safety matters to us, so please consume responsibly and be mindful of the choices you make. Cheers, and stay safe!");
     }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
