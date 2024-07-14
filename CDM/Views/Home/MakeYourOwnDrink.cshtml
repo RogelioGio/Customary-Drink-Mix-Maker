@@ -219,25 +219,75 @@
                         fill: white;
                     }
 
+            article form .button {
+                width: 100%;
+                height: 15vh;
+                padding: 3vh 2vw;
+                display: flex;
+                flex-direction: row;
+                gap: 3vw;
+            }
+
+                article form .button button {
+                    width: 100%;
+                    font-size: large;
+                    border-radius: 1vw;
+                    border: solid 1px rgba(0, 48, 73);
+                    background-color: white;
+                    color: rgba(0, 48, 73);
+                }
+
+                    article form .button button:hover {
+                        border: solid, 2px, rgba(0, 48, 73);
+                        background-color: rgba(0, 48, 73);
+                        color: white;
+                        fill: white;
+                    }
+
     aside {
-        width: 20%;
         background-color: black;
         color: white;
         position: sticky;
         float: right;
         right: 3dvw;
-        top: 9dvh;
-        border-radius: 5vh
+        top: 5dvh;
+        border-radius: 5vh;
+        padding: 2dvw;
     }
+
+        aside .header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            fill: white;
+        }
+
+            aside .header box-icon {
+                width: 3vw;
+                height: 5vh;
+            }
+
+            aside .header h2 {
+                margin: 0;
+                padding: 1vw;
+            }
+
         aside section .CurrentDrink {
-            padding: 30px;
+            padding: 1vw;
+            list-style: none;
+            margin: 0;
+        }
+
+        aside section p {
             margin: 0;
         }
 </style>
 <aside>
-    <section>
-        <ul class="CurrentDrink">
-        </ul>
+    <section class="header">
+        <box-icon type='solid' name='drink'></box-icon>
+        <h2>Current Drink Mix</h2>
+    </section>
+    <section id="DrinkList">
     </section>
 </aside>
 <article>
@@ -283,8 +333,8 @@
             <section id="layersContainer"></section>
         </section>
         <section class="button">
-            <button type="button" onclick="window.location='@Url.Action("Index", "Home")'">Back</button>
-            <button type="submit" onclick="drinkResponsibly()">Create Drink</button>
+            <button type="button" class="btn btn-primary transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-105-hover" onclick="window.location='@Url.Action("Index", "Home")'">Back</button>
+            <button type="submit" class="btn btn-primary transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-105-hover" onclick="drinkResponsibly()">Create Drink</button>
         </section>
     </form>
 </article>
@@ -363,6 +413,7 @@
         const input = document.querySelector(`input[name="Layers[${index}].Percentage"]`);
         input.value = parseInt(input.value || 0, 10) + valueToAdd;
         validatePercentages();
+        currentDrink_LayerShotPercentage(index, input.value)
     }
 
     function subtractValue(index, valueToSubtract) {
@@ -405,12 +456,21 @@
 
     //arraylist of current drink
     let CurrentDrink = [];
-    let currentdrinks = document.querySelector('.CurrentDrink')
-    currentdrinks.innerHTML = '';
+    const drinklist = document.getElementById('DrinkList')
 
     function currentDrink(checkbox, base) {
-        if (checkbox.checked) {
+        if (checkbox.checked || drinklist.innerHTML.trim() === '') {
+
+            let list = drinklist.querySelector('ul');
+            if (!list) {
+                list = document.createElement('ul');
+                list.classList.add('CurrentDrink');
+                drinklist.appendChild(list);
+            }
+
+            let currentdrinks = document.querySelector('.CurrentDrink')
             if (CurrentDrink.length === 0) {
+
                 CurrentDrink[0] = {
                     BaseDrink: base,
                     LayerCount: null
@@ -423,7 +483,7 @@
                     newitem.innerHTML = `<p id="Base">Base Drink: ${value.BaseDrink}</p>`;
                     currentdrinks.appendChild(newitem)
                 })
-            }else{
+            } else {
                 CurrentDrink[CurrentDrink.length - 1].BaseDrink = base;
 
                 Object.keys(CurrentDrink).forEach(id => {
@@ -432,11 +492,13 @@
                     Base.innerHTML = `Base Drink: ${value.BaseDrink}`;
                 });
             }
+        } else {
+            return
         }
-        
+
     }
 
-    
+
     function currentDrink_LayerCount(count) {
         let item = document.querySelector('.item')
         let drink = CurrentDrink.length - 1;
@@ -473,25 +535,34 @@
                 size.innerHTML = `Drink Size: Large`;
             }
         }
+        const shotlist = document.querySelector('#shotlist')
+        if (!shotlist) {
+            let shotlist = document.createElement('ul')
+            shotlist.id = 'shotlist';
+            item.appendChild(shotlist)
+        }
 
-        let shotlist = document.createElement('ul')
-        shotlist.id = 'shotlist';
-        item.appendChild(shotlist)
     }
 
     function currentDrink_Layer(num, shot) {
-        var layernum = num;
-        if (CurrentDrink[CurrentDrink.length - 1].Layer[layernum] == null) {
-            CurrentDrink[CurrentDrink.length - 1].Layer[layernum] = {
-                Layer: shot
+        const input = document.querySelector(`input[name="Layers[${num}].Percentage"]`);
+        if (CurrentDrink[CurrentDrink.length - 1].Layer[num] == null) {
+            CurrentDrink[CurrentDrink.length - 1].Layer[num] = {
+                Layer: shot,
+                Percent: input.value
             }
         } else {
-            CurrentDrink[CurrentDrink.length - 1].Layer[layernum].Layer = shot
+            CurrentDrink[CurrentDrink.length - 1].Layer[num].Layer = shot
         }
         console.log(CurrentDrink[CurrentDrink.length - 1].Layer)
         ReloadLayers()
     }
 
+    function currentDrink_LayerShotPercentage(num, shotpercent) {
+        CurrentDrink[CurrentDrink.length - 1].Layer[num].Percent = shotpercent
+        console.log(CurrentDrink[CurrentDrink.length - 1].Layer)
+        ReloadLayers()
+    }
 
     function ReloadLayers() {
         let shotlist = document.getElementById('shotlist')
@@ -500,7 +571,9 @@
             let value = CurrentDrink[CurrentDrink.length - 1].Layer[num];
 
             let newItem = document.createElement('li')
-            newItem.innerHTML = `<p>Layer ${parseInt(num)+1}: ${value.Layer}</p>`
+            newItem.innerHTML =
+                `<p>Layer ${parseInt(num) + 1}: ${value.Layer}</p>
+                 <p>Percentage: ${value.Percent}%</p>`
             shotlist.appendChild(newItem)
         })
     }
