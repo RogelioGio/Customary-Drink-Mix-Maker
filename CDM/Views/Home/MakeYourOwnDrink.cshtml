@@ -281,6 +281,39 @@
         aside section p {
             margin: 0;
         }
+
+        aside #DrinkList .CurrentDrink .item{
+            display: flex;
+            justify-content: space-between;
+        }
+
+        aside #DrinkList .CurrentDrink li #shotlist{
+            list-style: none;
+        }
+
+            aside #DrinkList .CurrentDrink li #shotlist .shotItem {
+                display: grid;
+                grid-template-rows: 50% 50%;
+                grid-template-columns: 50% 50%;
+                grid-template-areas:
+                    "Side1a Side2a"
+                    "Side1b Side2b";
+            }
+                aside #DrinkList .CurrentDrink li #shotlist .shotItem .Name1{
+                    grid-area: Side1a;
+                }
+                aside #DrinkList .CurrentDrink li #shotlist .shotItem .Name2 {
+                    grid-area: Side1b;
+                }
+                aside #DrinkList .CurrentDrink li #shotlist .shotItem .Value1{
+                    grid-area: Side2a;
+                    justify-self: end;
+                }
+                aside #DrinkList .CurrentDrink li #shotlist .shotItem .Value2 {
+                    grid-area: Side2b;
+                    justify-self: end;
+                }
+
 </style>
 <aside>
     <section class="header">
@@ -480,7 +513,9 @@
                     let value = CurrentDrink[id];
                     let newitem = document.createElement('li');
                     newitem.classList.add('item')
-                    newitem.innerHTML = `<p id="Base">Base Drink: ${value.BaseDrink}</p>`;
+                    newitem.innerHTML =
+                    `<p>Base Drink:</p>
+                    <p id="Base">${value.BaseDrink}`;
                     currentdrinks.appendChild(newitem)
                 })
             } else {
@@ -488,8 +523,8 @@
 
                 Object.keys(CurrentDrink).forEach(id => {
                     let value = CurrentDrink[id]
-                    let Base = document.getElementById('Base');
-                    Base.innerHTML = `Base Drink: ${value.BaseDrink}`;
+                    let Base = document.getElementById('Base')
+                    Base.innerHTML = `${value.BaseDrink}`;
                 });
             }
         } else {
@@ -500,7 +535,9 @@
 
 
     function currentDrink_LayerCount(count) {
-        let item = document.querySelector('.item')
+        let currentdrinks = document.querySelector('.CurrentDrink')
+        let newitem = document.createElement('li');
+        newitem.classList.add('item');
         let drink = CurrentDrink.length - 1;
         var Layer = new Array();
         let LayerSize;
@@ -510,37 +547,50 @@
             CurrentDrink[drink].LayerCount = count;
             CurrentDrink[drink].Layer = Layer
             if (CurrentDrink[drink].LayerCount == 3) {
-                LayerSize = `<p id="Size">Drink Size: Small</p>`;
+                LayerSize = `
+                <p>Drink Size:</p>
+                <p id="Size">Small</p>`;
             }
             else if (CurrentDrink[drink].LayerCount <= 4) {
-                LayerSize = `<p id="Size">Drink Size: Medium</p>`;
+                LayerSize = `
+                <p>Drink Size:</p>
+                <p id="Size">Medium</p>`;
             }
             else {
-                LayerSize = `<p id="Size">Drink Size: Large</p>`;
+                LayerSize = `
+                <p>Drink Size:</p>
+                <p id="Size">Large</p>`;
             }
+            newitem.innerHTML = LayerSize
+            currentdrinks.appendChild(newitem)
 
-            item.innerHTML += LayerSize;
         } else {
             let size = document.getElementById('Size');
             CurrentDrink[drink].LayerCount = count;
             CurrentDrink[drink].Layer = Layer
 
             if (CurrentDrink[drink].LayerCount == 3) {
-                size.innerHTML = `Drink Size: Small`;
+                size.innerHTML = `Small`;
             }
             else if (CurrentDrink[drink].LayerCount <= 4) {
-                size.innerHTML = `Drink Size: Medium`;
+                size.innerHTML = `Medium`;
             }
             else {
-                size.innerHTML = `Drink Size: Large`;
+                size.innerHTML = `Large`;
             }
         }
+
+        let shots = document.createElement('li')
+        currentdrinks.appendChild(shots)
+
         const shotlist = document.querySelector('#shotlist')
         if (!shotlist) {
-            let shotlist = document.createElement('ul')
+            let shotlist = document.createElement('ul');
             shotlist.id = 'shotlist';
-            item.appendChild(shotlist)
+            shots.appendChild(shotlist)
+
         }
+        ReloadLayers()
 
     }
 
@@ -567,13 +617,23 @@
     function ReloadLayers() {
         let shotlist = document.getElementById('shotlist')
         shotlist.innerHTML = '';
+
+        let title = document.createElement('li');
+        title.innerHTML = `<p>Layer Per Percentage:</p>`;
+        title.classList.add('LayerList')
+        shotlist.appendChild(title)
+
         Object.keys(CurrentDrink[CurrentDrink.length - 1].Layer).forEach(num => {
             let value = CurrentDrink[CurrentDrink.length - 1].Layer[num];
 
             let newItem = document.createElement('li')
+            newItem.classList.add('shotItem');
             newItem.innerHTML =
-                `<p>Layer ${parseInt(num) + 1}: ${value.Layer}</p>
-                 <p>Percentage: ${value.Percent}%</p>`
+                `<p class="Name1">Layer ${parseInt(num) + 1}:</p>
+                 <p class="Value1">${value.Layer}</p>
+                 <p class="Name2">Percentage:</p>
+                 <p class="Value2">${value.Percent}%</p>`
+
             shotlist.appendChild(newItem)
         })
     }
